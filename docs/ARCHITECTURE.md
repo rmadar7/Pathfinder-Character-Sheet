@@ -175,3 +175,25 @@ the first load. Keep it dependency-free.
 - Data keys keep their v36 short names (`n`, `lv`, `sc`, `d`, `r`, `m`), because the stored
   document uses them. Don't rename stored keys without a migration.
 - Components: `PascalCase`, one per file when non-trivial.
+
+## 9. Store rules learned the hard way
+
+- **Only save when dirty.** `flush()` writes only if there are unsaved changes (or on first
+  run / format upgrade). Saving on every tab hide bumped the revision and made every *other*
+  open tab "out of date".
+- **Re-check state when subscribing.** `useStore()` compares the state it rendered with the
+  state when its effect subscribes; IndexedDB can answer before effects run.
+- **`update()` never runs inside render.** Components may not mutate `ch`, not even to
+  "normalise" it; normalisation happens in the store at load and inside rules helpers that
+  are called from `update()`.
+
+## 10. Checking a change end to end
+
+```bash
+npm test                 # rules, migrations, storage (Vitest)
+npm run build            # typecheck + production build
+npx vite preview &       # serve dist/ on :4173
+npm run check:app        # every tab renders, no errors, key numbers, diagnostics
+npm run check:flows      # suppression, casting, reload, rest, stale tab, undo, level-up, theme
+npm run check:legacy     # the v36 sheet still renders and passes its own diagnostics
+```

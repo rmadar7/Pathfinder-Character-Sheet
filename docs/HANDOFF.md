@@ -289,19 +289,22 @@ Guidance:
 
 ### Porting checklist
 
-- [ ] Extract `chardata` from `Kaldaran_Sheet.html` into `data/character.json` (it is JSON in
-      a `<script type="application/json" id="chardata">` tag)
-- [ ] Extract the 396-spell `CRB` array into `data/spells.crb.json`
-- [ ] Port `runSelfTests()` to the test runner — **before** restructuring anything
-- [ ] Port the effects engine, with suppression receipts intact
-- [ ] Port derive (AC/touch/FF, saves, CMB/CMD with the **special** size modifier, init,
+Status as of 2026-11-01 (repo build, branch `claude/happy-tesla-5ss4rq`):
+
+- [x] Extract `chardata` into `data/characters/kaldaran.json`
+- [x] Extract the 396-spell `CRB` array into `data/spells.crb.json`
+- [x] Port `runSelfTests()` to the test runner (`src/rules/selftest.ts` + `test/selftest.test.ts`)
+- [x] Port the effects engine, with suppression receipts intact
+- [x] Port derive (AC/touch/FF, saves, CMB/CMD with the **special** size modifier, init,
       concentration)
-- [ ] Port slots + specialist slot (marker follows the school spell)
-- [ ] Port metamagic + Magical Lineage
-- [ ] Port scroll crafting
-- [ ] Port the mythic tab
-- [ ] Carry the ten house rulings across verbatim
-- [ ] Keep the parchment theme and the dark alternative
+- [x] Port slots + specialist slot (marker follows the school spell)
+- [x] Port metamagic + Magical Lineage
+- [x] Port scroll crafting
+- [x] Port the mythic tab
+- [x] Carry the ten house rulings across verbatim
+- [x] Keep the parchment theme and the dark alternative
+- [ ] Re-cite every ported rule on d20pfsrd (`docs/VERIFY.md`) — blocked in the build
+      environment; d20pfsrd.com was not reachable
 
 ---
 

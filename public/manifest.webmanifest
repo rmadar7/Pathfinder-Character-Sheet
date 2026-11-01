@@ -1,0 +1,10 @@
+{
+  "name": "Kaldaran — Character Sheet",
+  "short_name": "Kaldaran",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e8dfc8",
+  "theme_color": "#e8dfc8",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
