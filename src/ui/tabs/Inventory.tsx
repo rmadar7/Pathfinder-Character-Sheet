@@ -7,7 +7,7 @@ import { CRAFT_DAY, failsOn, minScrollCL, scribable, takeTenMakes } from '../../
 import { derive } from '../../rules/derive';
 import { carryCap, catOf, gearWeight, guessCat, loadBand, stockOf, stowedWeight } from '../../rules/gear';
 import { skillTotal } from '../../rules/skills';
-import { BonusRows } from '../components/BonusEditor';
+import { BonusRows, modsValid } from '../components/BonusEditor';
 import { scribe, scribeCheck } from '../../rules/actions';
 import { roll } from '../components/Dice';
 import { ModSummary } from '../components/EffectsManager';
@@ -29,7 +29,7 @@ function GearEditor({ g, i, onDone }: { g: GearItem | null; i: number | null; on
   const val = (k: keyof typeof f) => (e: Event) => setF({ ...f, [k]: (e.target as HTMLInputElement).value });
   const save = () => {
     const n = f.n.trim();
-    if (!n) return;
+    if (!n || !modsValid(fx)) return;
     const um = parseInt(f.um), uc = parseInt(f.uc), ur = parseInt(f.ur);
     const item: GearItem = {
       id: g?.id || 'g' + Date.now(), n, desc: f.desc.trim(), got: f.got.trim(),
@@ -62,7 +62,7 @@ function GearEditor({ g, i, onDone }: { g: GearItem | null; i: number | null; on
       <div class="gesec">Bonuses it gives while worn <span class="note2">— none is fine</span></div>
       <BonusRows mods={fx} onChange={setFx} />
       <div class="gerow" style="margin-top:10px">
-        <button class="go" onClick={save}>{i == null ? 'Add to inventory' : 'Save changes'}</button>
+        <button class="go" disabled={!modsValid(fx)} onClick={save}>{i == null ? 'Add to inventory' : 'Save changes'}</button>
         <button onClick={onDone}>Cancel</button>
       </div>
     </div>

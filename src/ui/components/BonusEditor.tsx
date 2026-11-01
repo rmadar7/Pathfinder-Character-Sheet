@@ -7,11 +7,14 @@ import { useState } from 'preact/hooks';
 import type { Duration, Effect, Mod } from '../../model/types';
 import { durToRounds } from '../../rules/duration';
 import { BONUS_TYPES } from '../../rules/stacking';
-import { TARGET_GROUPS, typeHint } from '../../rules/targets';
+import { TARGET_GROUPS, typeFits, typeHint, typesFor } from '../../rules/targets';
 import { ModSummary } from './EffectsManager';
 import { useCh } from '../store';
 
 export const blankMod = (): Mod => ({ stat: 'atk', type: 'untyped', v: 1 });
+
+/** Every bonus has a type that can apply to its target. */
+export const modsValid = (mods: Mod[]): boolean => mods.every((m) => typeFits(m.type || 'untyped', m.stat));
 
 /** The list of bonuses: what it applies to, what type, how much, and (optionally) when. */
 export function BonusRows({ mods, onChange }: { mods: Mod[]; onChange: (m: Mod[]) => void }) {
@@ -27,11 +30,15 @@ export function BonusRows({ mods, onChange }: { mods: Mod[]; onChange: (m: Mod[]
               onInput={(e) => set(i, { v: parseInt((e.target as HTMLInputElement).value) || 0 })} />
             <select style="width:118px" value={mo.type || 'untyped'} aria-label="Bonus type"
               onChange={(e) => set(i, { type: (e.target as HTMLSelectElement).value })}>
-              {BONUS_TYPES.map((t) => <option value={t}>{t}</option>)}
+              {typesFor(mo.stat, BONUS_TYPES).map((t) => <option value={t}>{t === 'untyped' ? 'untyped (DM didn\'t say)' : t}</option>)}
+              {!typeFits(mo.type || 'untyped', mo.stat) && <option value={mo.type}>{mo.type} — doesn't apply here</option>}
             </select>
             <label class="gil">to</label>
             <select style="flex:1;min-width:150px" value={mo.stat} aria-label="Applies to"
-              onChange={(e) => set(i, { stat: (e.target as HTMLSelectElement).value })}>
+              onChange={(e) => {
+                const stat = (e.target as HTMLSelectElement).value;
+                set(i, typeFits(mo.type || 'untyped', stat) ? { stat } : { stat, type: 'untyped' });
+              }}>
               {TARGET_GROUPS.map((g) => (
                 <optgroup label={g.g}>{g.items.map(([k, l]) => <option value={k}>{l}</option>)}</optgroup>
               ))}
@@ -43,6 +50,9 @@ export function BonusRows({ mods, onChange }: { mods: Mod[]; onChange: (m: Mod[]
             <input style="flex:1" value={mo.when || ''} placeholder="blank = always · or vs fear, vs undead…"
               onInput={(e) => { const w = (e.target as HTMLInputElement).value; set(i, { when: w || undefined }); }} />
           </div>
+          {!typeFits(mo.type || 'untyped', mo.stat) && (
+            <div class="flag bad">A {mo.type} bonus can't apply to that. Pick another type; if the DM didn't name one, use untyped.</div>
+          )}
           <div class="note2">
             {typeHint(mo.type || 'untyped')}
             {mo.when?.trim() && ' Because it only applies sometimes, it is listed beside the number rather than added in.'}
@@ -66,7 +76,7 @@ export function CustomEffectForm({ initial, onDone }: { initial?: Effect; onDone
   const [len, setLen] = useState(initial?.dur && initial.dur.n !== 'level' ? String(initial.dur.n) : '');
   const [mods, setMods] = useState<Mod[]>(initial?.mods?.length ? structuredClone(initial.mods) : [blankMod()]);
   const timed = lasts !== 'ongoing';
-  const ok = n.trim() && mods.length && (!timed || parseInt(len) > 0);
+  const ok = n.trim() && mods.length && modsValid(mods) && (!timed || parseInt(len) > 0);
   const save = () => {
     if (!ok) return;
     const dur: Duration | null = timed ? { u: lasts as Duration['u'], n: parseInt(len) } : null;

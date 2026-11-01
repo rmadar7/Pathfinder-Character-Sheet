@@ -192,3 +192,14 @@ be edited later. Items can now carry several bonuses (the editor used to edit on
    case; it now points to the box that works out the DC by cause.
 4. **`check:flows` dark-theme step was racy.** It read the theme attribute straight after the
    click, before the effect that sets it had run; it now waits for it. Not an app bug.
+
+## 2026-11-01 — Bonus types limited to what they can apply to
+
+Ryan built a test bonus, "+1 armor to Strength", because the editor offered every bonus type
+for every target. An armor bonus can only ever apply to AC. The editor now offers only the
+types d20pfsrd's bonus table (Common Terms → Bonus, "Can Affect" column) allows for the
+chosen target, with **untyped** first ("the DM didn't say"). It also adds the two missing
+types, **inherent** (manuals, *wish*) and **alchemical**. Changing the target resets a type
+that no longer fits. An existing bonus with a type that can't apply is flagged in the editor
+and can't be saved until it's fixed; it isn't changed silently. Rule table quoted in
+`rules/targets.ts`; tests in `test/custom-bonus.test.ts`.

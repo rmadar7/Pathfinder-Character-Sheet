@@ -11,7 +11,8 @@ export const STACKING_TYPES = new Set(['dodge', 'circumstance', 'untyped', 'raci
 
 export const BONUS_TYPES = [
   'armor', 'shield', 'natural', 'deflection', 'dodge', 'size', 'enhancement', 'competence',
-  'insight', 'luck', 'morale', 'profane', 'sacred', 'resistance', 'circumstance', 'racial', 'trait', 'untyped',
+  'insight', 'luck', 'morale', 'profane', 'sacred', 'resistance', 'circumstance', 'racial', 'trait',
+  'inherent', 'alchemical', 'untyped',
 ];
 
 /** AC bonus types a touch attack ignores. */
