@@ -1,0 +1,1093 @@
+{
+  "lvl": 4,
+  "tier": 2,
+  "ab": {
+    "Str": 10,
+    "Dex": 14,
+    "Con": 14,
+    "Int": 23,
+    "Wis": 14,
+    "Cha": 12
+  },
+  "hp": 32,
+  "hpmax": 32,
+  "sv": {
+    "fort": 0,
+    "ref": 0,
+    "will": 0
+  },
+  "initMisc": 2,
+  "effects": [
+    {
+      "id": "mig-buff-0",
+      "name": "Mage Armor",
+      "src": "spell",
+      "kind": "spell",
+      "on": false,
+      "dur": null,
+      "left": null,
+      "mods": [
+        {
+          "stat": "ac",
+          "type": "armor",
+          "v": 4
+        }
+      ]
+    },
+    {
+      "id": "mig-buff-1",
+      "name": "Shield",
+      "src": "spell",
+      "kind": "spell",
+      "on": false,
+      "dur": null,
+      "left": null,
+      "mods": [
+        {
+          "stat": "ac",
+          "type": "shield",
+          "v": 4
+        }
+      ]
+    },
+    {
+      "id": "mig-buff-2",
+      "name": "Barkskin",
+      "src": "spell",
+      "kind": "spell",
+      "on": false,
+      "dur": null,
+      "left": null,
+      "mods": [
+        {
+          "stat": "ac",
+          "type": "natural",
+          "v": 2
+        }
+      ]
+    },
+    {
+      "id": "mig-buff-3",
+      "name": "Shield of Faith",
+      "src": "spell",
+      "kind": "spell",
+      "on": false,
+      "dur": null,
+      "left": null,
+      "mods": [
+        {
+          "stat": "ac",
+          "type": "deflection",
+          "v": 2
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "mythic": {
+    "path": "Arch-Mage",
+    "arcana": "Wild Arcana",
+    "trials": [
+      "Lich"
+    ],
+    "abilities": [
+      {
+        "tier": 1,
+        "name": "Harmonious Mage"
+      },
+      {
+        "tier": 2,
+        "name": "Enduring Armor"
+      }
+    ],
+    "feats": [
+      {
+        "tier": 1,
+        "name": "Undead Master (Mythic)"
+      }
+    ],
+    "abilityScores": [
+      {
+        "tier": 2,
+        "abil": "Int",
+        "v": 2
+      }
+    ],
+    "bonusHpPerTier": 3
+  },
+  "book": [
+    {
+      "n": "Acid Splash",
+      "lv": 0,
+      "sc": "Conjuration",
+      "d": "Ranged touch. 1d3 acid damage."
+    },
+    {
+      "n": "Detect Magic",
+      "lv": 0,
+      "sc": "Divination",
+      "d": "Detects spells and magic items within 60 ft."
+    },
+    {
+      "n": "Prestidigitation",
+      "lv": 0,
+      "sc": "Universal",
+      "d": "Minor tricks — clean, chill, flavor, color."
+    },
+    {
+      "n": "Light",
+      "lv": 0,
+      "sc": "Evocation",
+      "d": "Object shines like a torch."
+    },
+    {
+      "n": "Mage Hand",
+      "lv": 0,
+      "sc": "Transmutation",
+      "d": "Move a 5-lb object at range."
+    },
+    {
+      "n": "Arcane Mark",
+      "lv": 0,
+      "sc": "Universal",
+      "d": "Inscribe a personal rune."
+    },
+    {
+      "n": "Resistance",
+      "lv": 0,
+      "sc": "Abjuration",
+      "d": "Target gains +1 on saving throws."
+    },
+    {
+      "n": "Touch of Fatigue",
+      "lv": 0,
+      "sc": "Necromancy",
+      "d": "Touch attack fatigues the target. Fort negates."
+    },
+    {
+      "n": "Disrupt Undead",
+      "lv": 0,
+      "sc": "Necromancy",
+      "d": "Ranged touch. 1d6 damage to one undead."
+    },
+    {
+      "n": "Drench",
+      "lv": 0,
+      "sc": "Conjuration",
+      "d": "A downpour soaks a target."
+    },
+    {
+      "n": "Sotto Voce",
+      "lv": 0,
+      "sc": "Necromancy",
+      "d": "A rasping whisper fills a creature with dread."
+    },
+    {
+      "n": "Read Magic",
+      "lv": 0,
+      "sc": "Divination",
+      "d": "Read scrolls and spellbooks."
+    },
+    {
+      "n": "Bleed",
+      "lv": 0,
+      "sc": "Necromancy",
+      "d": "A stabilized creature resumes dying."
+    },
+    {
+      "n": "Ray of Frost",
+      "lv": 0,
+      "sc": "Evocation",
+      "d": "Ranged touch. 1d3 cold damage."
+    },
+    {
+      "n": "Daze",
+      "lv": 0,
+      "sc": "Enchantment",
+      "d": "Humanoid with 4 HD or fewer takes no actions for 1 round."
+    },
+    {
+      "n": "Mending",
+      "lv": 0,
+      "sc": "Transmutation",
+      "d": "Minor repairs on an object."
+    },
+    {
+      "n": "Message",
+      "lv": 0,
+      "sc": "Transmutation",
+      "d": "Whisper a conversation at distance."
+    },
+    {
+      "n": "Ghost Sound",
+      "lv": 0,
+      "sc": "Illusion",
+      "d": "Figment sounds."
+    },
+    {
+      "n": "Mage Armor",
+      "lv": 1,
+      "sc": "Conjuration",
+      "d": "+4 armor bonus to AC for 1 hour/level. Cast it every morning — you wear no armor.",
+      "src": "wizard"
+    },
+    {
+      "n": "Reduce Person",
+      "lv": 1,
+      "sc": "Transmutation",
+      "d": "Humanoid shrinks a size. +2 Dex, −2 Str, +1 attack and AC.",
+      "src": "wizard"
+    },
+    {
+      "n": "Enlarge Person",
+      "lv": 1,
+      "sc": "Transmutation",
+      "d": "Humanoid grows a size. +2 Str, −2 Dex, reach +5 ft. Excellent on Brug.",
+      "src": "wizard"
+    },
+    {
+      "n": "Cure Light Wounds",
+      "lv": 1,
+      "sc": "Conjuration",
+      "d": "Heal 1d8 + 1 per caster level (max +5). Damages undead instead.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Chill Touch",
+      "lv": 1,
+      "sc": "Necromancy",
+      "d": "1d6 damage + 1 Str damage per touch, one touch per caster level. Undead flee.",
+      "src": "wizard"
+    },
+    {
+      "n": "Summon Monster I",
+      "lv": 1,
+      "sc": "Conjuration",
+      "d": "Summons one extraplanar creature to fight for you.",
+      "src": "wizard"
+    },
+    {
+      "n": "Identify",
+      "lv": 1,
+      "sc": "Divination",
+      "d": "+10 on Spellcraft to identify a magic item.",
+      "src": "wizard"
+    },
+    {
+      "n": "Vanish",
+      "lv": 1,
+      "sc": "Illusion",
+      "d": "Invisible 1 round/level, 5 max.",
+      "src": "wizard"
+    },
+    {
+      "n": "Fool's Gold",
+      "lv": 1,
+      "sc": "Illusion",
+      "d": "Disguise copper or silver as gold.",
+      "src": "wizard"
+    },
+    {
+      "n": "Interrogation",
+      "lv": 1,
+      "sc": "Necromancy",
+      "d": "Target answers questions or suffers pain. Will negates.",
+      "src": "wizard"
+    },
+    {
+      "n": "Blood Money",
+      "lv": 1,
+      "sc": "Transmutation",
+      "d": "Spend your own blood for a spell's material components.",
+      "src": "wizard"
+    },
+    {
+      "n": "Lesser Animate Dead",
+      "lv": 2,
+      "sc": "Necromancy",
+      "d": "Raise ONE Small or Medium skeleton or zombie. Permanent. Your on-ramp to an undead retinue.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Acid Arrow",
+      "lv": 2,
+      "sc": "Conjuration",
+      "d": "Ranged touch. 2d4 acid, plus another round per 3 caster levels. No save.",
+      "src": "wizard"
+    },
+    {
+      "n": "Scorching Ray",
+      "lv": 2,
+      "sc": "Evocation",
+      "d": "Ranged touch. 4d6 fire.",
+      "src": "wizard"
+    },
+    {
+      "n": "Invisibility",
+      "lv": 2,
+      "sc": "Illusion",
+      "d": "Invisible 1 min/level, or until you attack.",
+      "src": "wizard"
+    },
+    {
+      "n": "Mirror Image",
+      "lv": 2,
+      "sc": "Illusion",
+      "d": "1d4 + 1 per 3 caster levels of doubles. Attacks may hit a figment instead.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Animate Dead",
+      "lv": 3,
+      "sc": "Necromancy",
+      "gm": 1,
+      "d": "Raise skeletons or zombies. 2 HD per caster level per casting; control 4 HD per caster level. DM RULING: 3rd level for you. By the book it's 4th.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Vampiric Touch",
+      "lv": 3,
+      "sc": "Necromancy",
+      "d": "Touch. 1d6 per two caster levels. You gain that much as temporary hp.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Bestow Curse",
+      "lv": 3,
+      "sc": "Necromancy",
+      "d": "Permanent curse: −6 to an ability, −4 attacks and saves, or 50% chance to lose each action. Will negates.",
+      "src": "Mystic Past Life"
+    },
+    {
+      "n": "Slow",
+      "lv": 3,
+      "sc": "Transmutation",
+      "d": "One creature per level: staggered, half speed, −1 attack/AC/Reflex. Will negates.",
+      "src": "wizard"
+    },
+    {
+      "n": "Glitterdust",
+      "lv": 2,
+      "sc": "Conjuration",
+      "d": "10-ft-radius spread of golden dust. Blinds creatures that fail a Will save, and outlines anything invisible. NO spell resistance. A blinded creature gets a new save at the end of each of its turns.",
+      "ct": "1 standard action",
+      "cp": "V, S, M (ground mica)",
+      "rg": "medium (100 ft. + 10 ft./level)",
+      "tg": "creatures and objects within a 10-ft-radius spread",
+      "du": "1 round/level",
+      "sv": "Will negates (blinding only)",
+      "sr": "no",
+      "src": "wizard"
+    },
+    {
+      "n": "Blindness/Deafness",
+      "lv": 2,
+      "sc": "Necromancy",
+      "d": "One living creature is permanently blinded OR deafened, your choice. Fortitude negates. Verbal component only — no hands needed.",
+      "ct": "1 standard action",
+      "cp": "V",
+      "rg": "medium (100 ft. + 10 ft./level)",
+      "tg": "one living creature",
+      "du": "permanent (dismissible)",
+      "sv": "Fortitude negates",
+      "sr": "yes",
+      "src": "wizard"
+    },
+    {
+      "n": "Detect Poison",
+      "lv": 0,
+      "sc": "Divination",
+      "src": "wizard"
+    },
+    {
+      "n": "Dancing Lights",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard"
+    },
+    {
+      "n": "Flare",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard"
+    },
+    {
+      "n": "Open/Close",
+      "lv": 0,
+      "sc": "Transmutation",
+      "src": "wizard"
+    },
+    {
+      "n": "Detect Fiendish Presence",
+      "lv": 0,
+      "sc": "Divination",
+      "src": "wizard",
+      "d": "Detects evil outsiders and their lingering magic, plus clerics and paladins of fiendish deities."
+    },
+    {
+      "n": "Grasp",
+      "lv": 0,
+      "sc": "Divination",
+      "src": "wizard",
+      "d": "Immediate action when you fail a Climb check and would fall: reroll it at –2."
+    },
+    {
+      "n": "Spark",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard",
+      "d": "Ranged touch. A spark of electricity deals 1d3 electricity damage. Also lights fires."
+    },
+    {
+      "n": "Breeze",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard",
+      "d": "A light wind. +2 on saves against heat, breath weapons, clouds, vapours and gases."
+    },
+    {
+      "n": "Scoop",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard",
+      "d": "A small container of force that gathers and carries liquids or small objects."
+    },
+    {
+      "n": "Penumbra",
+      "lv": 0,
+      "sc": "Evocation",
+      "src": "wizard",
+      "d": "Keeps the target slightly shadowed — cancels light sensitivity and light blindness penalties."
+    },
+    {
+      "n": "Haunted Fey Aspect",
+      "lv": 0,
+      "sc": "Illusion",
+      "src": "wizard",
+      "d": "You look like a disturbing fey. DR 1/cold iron against one opponent until it ends or you take damage."
+    },
+    {
+      "n": "Oath of Anonymity",
+      "lv": 0,
+      "sc": "Illusion",
+      "src": "wizard",
+      "d": "Conceals your identity from casual recognition."
+    },
+    {
+      "n": "Vacuous Vessel",
+      "lv": 0,
+      "sc": "Illusion",
+      "src": "wizard",
+      "d": "Makes a container appear empty, or its contents appear to be something else."
+    },
+    {
+      "n": "Chameleon Scales",
+      "lv": 0,
+      "sc": "Transmutation",
+      "src": "wizard",
+      "d": "Shift your skin colour to another natural for your race — helps disguise as a similar race."
+    },
+    {
+      "n": "Jolt",
+      "lv": 0,
+      "sc": "Transmutation",
+      "src": "wizard",
+      "d": "Ranged touch. A spark of electricity deals 1d3 damage."
+    },
+    {
+      "n": "Root",
+      "lv": 0,
+      "sc": "Transmutation",
+      "src": "wizard",
+      "d": "Strengthens your connection to the ground: bonus to CMD and Acrobatics."
+    },
+    {
+      "n": "Scrivener's Chant",
+      "lv": 0,
+      "sc": "Transmutation",
+      "src": "wizard",
+      "d": "An animated quill copies a written work at one page per minute."
+    }
+  ],
+  "prep": {
+    "1": [
+      "Reduce Person",
+      "Cure Light Wounds",
+      "Blood Money",
+      "Vanish",
+      "Chill Touch",
+      "Fool's Gold"
+    ],
+    "2": [
+      "Lesser Animate Dead",
+      "Scorching Ray",
+      "Invisibility",
+      "Blindness/Deafness",
+      "Glitterdust"
+    ],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  },
+  "cast": {
+    "1": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "2": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  },
+  "used": {
+    "mythic": 0,
+    "grave": 0,
+    "cmd": 0,
+    "cl": 0,
+    "dw": 0,
+    "st": 0,
+    "bond": 0
+  },
+  "gear": [
+    {
+      "id": "wand-mm",
+      "n": "Wand of Magic Missile",
+      "desc": "1d4+1 per missile · auto-hit, no save, no SR",
+      "wt": 0,
+      "qty": 1,
+      "slot": "carried",
+      "cls": "y",
+      "help": "wand",
+      "uses": {
+        "cur": 20,
+        "max": 20,
+        "regain": 5
+      },
+      "cat": "magic"
+    },
+    {
+      "id": "pot-clw",
+      "n": "Potion of Cure Light Wounds",
+      "desc": "Heals 1d8+1. Not restored by resting.",
+      "wt": 0.5,
+      "qty": 1,
+      "slot": "carried",
+      "cls": "r",
+      "help": "potions",
+      "uses": {
+        "cur": 3,
+        "max": 3,
+        "regain": 0
+      },
+      "cat": "magic"
+    },
+    {
+      "id": "pot-great",
+      "n": "Greater healing potion",
+      "desc": "Not restored by resting.",
+      "wt": 0.5,
+      "qty": 1,
+      "slot": "carried",
+      "cls": "r",
+      "uses": {
+        "cur": 1,
+        "max": 1,
+        "regain": 0
+      },
+      "cat": "magic"
+    },
+    {
+      "id": "c1785093255418",
+      "n": "Ring of the Sophisticated",
+      "desc": "+4 Knowledge (Local), +4 Sense Motive, 1/Day Cast Locate Creature/Object, On Command, find nearest bar within 20 mi",
+      "wt": 0,
+      "qty": 1,
+      "slot": "worn",
+      "cls": "r",
+      "uses": {
+        "cur": 1,
+        "max": 1,
+        "regain": 0
+      },
+      "cat": "magic",
+      "fx": [
+        {
+          "stat": "skill:Know. Local",
+          "type": "competence",
+          "v": 4
+        },
+        {
+          "stat": "skill:Sense Motive",
+          "type": "competence",
+          "v": 4
+        }
+      ]
+    },
+    {
+      "id": "glb6djbksxvl",
+      "n": "Quarterstaff",
+      "desc": "",
+      "wt": 4,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gj293udzm408",
+      "n": "Robe",
+      "desc": "",
+      "wt": 1,
+      "qty": 1,
+      "slot": "worn",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gcjd5zcrv6lt",
+      "n": "Bonded amulet",
+      "desc": "cast one spell/day from your book unprepared",
+      "wt": 0,
+      "qty": 1,
+      "slot": "worn",
+      "uses": null,
+      "cat": "magic"
+    },
+    {
+      "id": "g6nlrxe7mmic",
+      "n": "Ring of Sustenance",
+      "desc": "a full night's rest takes 2 hours instead of 8 (needs 1 week of wear first)",
+      "wt": 0,
+      "qty": 1,
+      "slot": "worn",
+      "uses": null,
+      "cat": "magic"
+    },
+    {
+      "id": "gxtb90t6697r",
+      "n": "Backpack",
+      "desc": "",
+      "wt": 2,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gay7amzaefqo",
+      "n": "Spell component pouch",
+      "desc": "",
+      "wt": 2,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gkqkykwkb98q",
+      "n": "Bedroll",
+      "desc": "",
+      "wt": 5,
+      "qty": 1,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "gy4la5h3eqkr",
+      "n": "Belt pouch",
+      "desc": "",
+      "wt": 0.5,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gui2gjfpb8dc",
+      "n": "Flint and steel",
+      "desc": "",
+      "wt": 0,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "gbm7ew3fz4m",
+      "n": "Ink · Ink pen",
+      "desc": "",
+      "wt": 0,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gsc7pmvjybv",
+      "n": "Iron pot · Mess kit · Soap",
+      "desc": "",
+      "wt": 6,
+      "qty": 1,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "ged0j0elvvp",
+      "n": "Torches",
+      "desc": "",
+      "wt": 1,
+      "qty": 10,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "gvl6amdjy0rb",
+      "n": "Trail rations",
+      "desc": "",
+      "wt": 1,
+      "qty": 19,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "gue9o7v4u69b",
+      "n": "Waterskin",
+      "desc": "",
+      "wt": 4,
+      "qty": 1,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "survival"
+    },
+    {
+      "id": "gvjjerwngwb",
+      "n": "Riding saddle · Saddlebags",
+      "desc": "",
+      "wt": 33,
+      "qty": 1,
+      "slot": "stowed",
+      "uses": null,
+      "cat": "gear"
+    },
+    {
+      "id": "gbkj49vitxe7",
+      "n": "Magic grass",
+      "desc": "Found and pocketed. Not identified yet — Spellcraft or detect magic to work out what it is.",
+      "wt": 0,
+      "qty": 1,
+      "slot": "carried",
+      "uses": null,
+      "cat": "gear"
+    }
+  ],
+  "gp": 521,
+  "sp": 9,
+  "cp": 0,
+  "undead": [
+    {
+      "n": "Skeleton",
+      "hd": 2,
+      "pool": "cmd"
+    },
+    {
+      "n": "Armored Skeleton",
+      "hd": 4,
+      "pool": "cmd"
+    }
+  ],
+  "lastPrep": {
+    "1": [
+      "Reduce Person",
+      "Cure Light Wounds",
+      "Enlarge Person",
+      "Blood Money"
+    ],
+    "2": [
+      "Lesser Animate Dead",
+      "Scorching Ray",
+      "Invisibility"
+    ],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  },
+  "round": 0,
+  "brughp": 30,
+  "strictUndead": false,
+  "schema": 8,
+  "hplog": [
+    {
+      "t": 1789320926216,
+      "from": 1,
+      "to": 32,
+      "note": "full rest"
+    }
+  ],
+  "theme": "parchment",
+  "brug": {
+    "name": "Brug",
+    "hp": 30,
+    "hpmax": 30,
+    "ac": 17,
+    "touch": 8,
+    "ff": 16,
+    "fort": 6,
+    "ref": 1,
+    "will": 3,
+    "speed": 30,
+    "size": "Large",
+    "ab": {
+      "Str": 21,
+      "Dex": 8,
+      "Con": 15,
+      "Int": 6,
+      "Wis": 10,
+      "Cha": 7
+    },
+    "attacks": [
+      {
+        "n": "Greatclub",
+        "hit": 7,
+        "dmg": "2d8+7",
+        "crit": "×2"
+      },
+      {
+        "n": "Javelin (thrown)",
+        "hit": 1,
+        "dmg": "1d8+5",
+        "crit": "×2"
+      }
+    ],
+    "note": "Ogre. Life debt, not a hireling — he rolls his own initiative and acts on his own turn. Darkvision 60 ft."
+  },
+  "rulings": {
+    "umFeatCountsAsSpell": true
+  },
+  "subschool": "",
+  "specialist": "Necromancy",
+  "feats": [
+    "Spell Focus (Necromancy) — +1 to the save DC of every Necromancy spell you cast",
+    "Scribe Scroll — wizard bonus feat",
+    "Command Undead — bonus feat from Power over Undead, your Necromancy (Undead) school power",
+    "Undead Master — count as 4 levels higher for Hit Dice of undead you animate or command",
+    "Undead Master (Mythic) — your tier-1 mythic feat. Adds your tier on top of that +4"
+  ],
+  "house": [
+    "Animate Dead is a 3rd-level spell for Kaldaran — DM approved. By the book it's 4th, and Mystic Past Life can't legally grant it since every class with it at 3rd is divine.",
+    "Cantrips are unlimited. (By the book you prepare 4 a day and those 4 can be cast at will — the house part is only that I do not have to pick which 4.)",
+    "Wand of Magic Missile regains 5 charges per day, max 20.",
+    "Mage Armor dropped from the daily prep. Enduring Armor (Arch-Mage tier 2) is an ARMOR bonus of 3 + tier = +5; Mage Armor is an armor bonus of +4. Same type, so they never stack — Mage Armor was contributing nothing. Still in the spellbook if Enduring Armor is ever dispelled and I need a stopgap before switching it back on (swift action).",
+    "A night's rest is 8 hours and heals 2 × character level — DM ruling. By the book 8 hours heals 1 × level, and 2 × requires a full day and night of complete bed rest.",
+    "Ring of Sustenance: still need the full 8 hours of rest — DM ruling. The ring covers spell preparation, not the sleep requirement. By the book it reduces the rest needed to 2 hours.",
+    "Undead Master prerequisite is met by the Command Undead FEAT — DM approved. By the book the prerequisite reads “the ability to cast animate dead or command undead”, and d20pfsrd links both to the spells, so RAW the feat would not count. The feat's own benefit text explicitly covers “or use the Command Undead feat”, which is the basis for the ruling.",
+    "Mystic Past Life picks stand as chosen — DM approved. Mirror Image, Lesser Animate Dead and Vampiric Touch were already on the wizard list, so those three picks gained nothing, but they are not being reassigned.",
+    "Animate Dead control cap is 4 HD × effective caster level, counting Undead Master's +4 and the mythic +tier — DM approved. At wizard 4 / tier 2 that is caster level 10, so 40 HD. The stricter reading (4 × wizard level = 16) does not apply at this table.",
+    "Max HP of 32 already includes the Arch-Mage bonus for BOTH tiers — 3 per tier, 6 total. Confirmed with the DM."
+  ],
+  "open": [],
+  "notes": "",
+  "identity": {
+    "race": "Samsaran",
+    "classLabel": "Wizard",
+    "role": "Necromancer",
+    "alignment": "Neutral Good",
+    "age": "68",
+    "height": "6'0\"",
+    "weight": "155 lbs",
+    "hair": "Silver",
+    "eyes": "Blue",
+    "skin": "Pale blue, clear blood",
+    "homeland": "City of Four Elements"
+  },
+  "bio": "Born in the City of Four Elements, Kaldaran always carried a quiet weight. His dreams were plagued by flickers of forgotten rituals, elemental screams, and scorched stone — memories too fractured to name.\n\nHe sought answers in structure. He entered a formal arcane college. His instructors warned against necromancy. Kaldaran was drawn to it anyway — not for power, not for fear, but because the dead remembered what the living forgot.\n\nFor decades he toiled in the tower, always adjacent to knowledge, never invited into it. Until a misfiled scroll triggered a vision: flames, betrayal, and a cracked keystone. Something he may have helped break.\n\nBRUG — THE DEBT OF FREEDOM\nAn ogre bound by a warlock's pact, wearing an iron band he did not know was a mark of ownership. Kaldaran recognized the runes, broke the enchantment, and asked for nothing.\n\nBrug knelt beside the slender wizard and said only: \"Mine now. You saved Brug. Brug smash anything hurt you.\"\n\nHe does not remember who he was. But he remembers that he failed. And this time, he will not look away.",
+  "langs": [
+    "Common",
+    "Samsaran",
+    "Abyssal",
+    "Celestial",
+    "Draconic",
+    "Infernal",
+    "Giant",
+    "Necril",
+    "Orcish",
+    "Undercommon",
+    "Ignan",
+    "Goblin"
+  ],
+  "skills": {
+    "Acrobatics": {
+      "r": 1,
+      "m": 0
+    },
+    "Appraise": {
+      "r": 1,
+      "m": 0
+    },
+    "Bluff": {
+      "r": 0,
+      "m": 0
+    },
+    "Climb": {
+      "r": 0,
+      "m": 0
+    },
+    "Craft (Jewelry)": {
+      "r": 1,
+      "m": 0
+    },
+    "Diplomacy": {
+      "r": 0,
+      "m": 0
+    },
+    "Disable Device": {
+      "r": 0,
+      "m": 0
+    },
+    "Disguise": {
+      "r": 0,
+      "m": 0
+    },
+    "Escape Artist": {
+      "r": 0,
+      "m": 0
+    },
+    "Fly": {
+      "r": 2,
+      "m": 0
+    },
+    "Handle Animal": {
+      "r": 0,
+      "m": 0
+    },
+    "Heal": {
+      "r": 1,
+      "m": 0
+    },
+    "Intimidate": {
+      "r": 0,
+      "m": 0
+    },
+    "Know. Arcana": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Dungeoneering": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Engineering": {
+      "r": 0,
+      "m": 0
+    },
+    "Know. Geography": {
+      "r": 0,
+      "m": 0
+    },
+    "Know. History": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Local": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Nature": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Nobility": {
+      "r": 0,
+      "m": 0
+    },
+    "Know. Planes": {
+      "r": 1,
+      "m": 0
+    },
+    "Know. Religion": {
+      "r": 1,
+      "m": 0
+    },
+    "Linguistics": {
+      "r": 4,
+      "m": 0
+    },
+    "Perception": {
+      "r": 4,
+      "m": 0
+    },
+    "Perform": {
+      "r": 0,
+      "m": 0
+    },
+    "Profession": {
+      "r": 0,
+      "m": 0
+    },
+    "Ride": {
+      "r": 0,
+      "m": 0
+    },
+    "Sense Motive": {
+      "r": 0,
+      "m": 0
+    },
+    "Sleight of Hand": {
+      "r": 0,
+      "m": 0
+    },
+    "Spellcraft": {
+      "r": 4,
+      "m": 0
+    },
+    "Stealth": {
+      "r": 3,
+      "m": 0
+    },
+    "Survival": {
+      "r": 3,
+      "m": 0
+    },
+    "Swim": {
+      "r": 0,
+      "m": 0
+    },
+    "Use Magic Device": {
+      "r": 1,
+      "m": 0
+    }
+  },
+  "savedAt": 1789331999816,
+  "craft": {
+    "mats": 500,
+    "hours": 0,
+    "pick": "",
+    "cl": null,
+    "log": []
+  }
+}
