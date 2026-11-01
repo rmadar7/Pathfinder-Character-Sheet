@@ -11,7 +11,9 @@ const intOf = (e: Event) => parseInt((e.target as HTMLInputElement).value) || 0;
 export function Combat() {
   const ch = useCh();
   const C = derive(ch), m = C.m, R = C.R, L = ch.lvl;
-  const acParts = [<><b>10</b> base</>, <>{sgn(m.Dex)} <b>Dex</b></>];
+  const acParts = [<><b>10</b> base</>, C.dexDenied && C.dexAC
+    ? <span class="supp">✗ {sgn(m.Dex)} Dex — {C.dexDenied}: you lose your Dex bonus to AC</span>
+    : <>{sgn(m.Dex)} <b>Dex</b></>];
   // CHARACTER-SPECIFIC: "Reactionary trait" label on +2 misc init; Lifebound note on Fort.
   const reactionary = ch.traits.some((t) => /^reactionary/i.test(t));
   const lifebound = ch.traits.some((t) => /^lifebound/i.test(t));
@@ -87,8 +89,9 @@ export function Combat() {
             </MathRow>
             <MathRow label="Caster level" total={C.cl} help="casterlevel">
               <Receipt parts={[<><b>{L}</b> wizard level</>]} res={R.clR} />
-              {/* v36 wording kept; VERIFY.md → "Wild Arcana caster level". */}
-              {ch.mythic.arcana === 'Wild Arcana' && ch.tier > 0 && <><br /><span class="src">Wild Arcana casts at +2 = CL {C.cl + 2}.</span></>}
+              {/* d20pfsrd, Archmage → Wild Arcana: "you treat your caster level as 2 levels higher
+                  for the purpose of any effect dependent on level." */}
+              {ch.mythic.arcana === 'Wild Arcana' && ch.tier > 0 && <><br /><span class="src">Wild Arcana casts at +2 = CL {C.cl + 2} for anything that depends on level.</span></>}
             </MathRow>
             <MathRow label="Concentration" total={<Rollable v={C.conc} label="Concentration" />} help="conc">
               <Receipt parts={[<><b>{L}</b> caster level</>, <>{sgn(m.Int)} <b>Int</b></>]} res={mergeRes(R.clR, R.concR)} />

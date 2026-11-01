@@ -37,7 +37,7 @@ export function Suppressed({ res }: { res: Res }) {
         <>
           <br />
           <span class="supp">
-            ✗ {sgn(r.v)} {r.type} · {r.name} — SUPPRESSED. Two {r.type} bonuses don't stack; {r.beatenBy.name}'s {sgn(r.beatenBy.v)} is higher.
+            ✗ {sgn(r.v)} {r.type} · {r.name} — {r.why ? r.why : <>SUPPRESSED. Two {r.type} bonuses don't stack; {r.beatenBy.name}'s {sgn(r.beatenBy.v)} is higher.</>}
           </span>
         </>
       ))}
@@ -52,7 +52,7 @@ export function receiptText(parts: string[], res: Res, opts: { hideSuppressed?: 
   let t = rows.join(' ');
   if (!opts.hideSuppressed)
     for (const r of res.suppressed)
-      t += ` · SUPPRESSED ${sgn(r.v)} ${r.type} ${r.name} — ${r.beatenBy.name} ${sgn(r.beatenBy.v)} is higher and ${r.type} bonuses don't stack`;
+      t += ` · LOST ${sgn(r.v)} ${r.type} ${r.name} — ` + (r.why ?? `${r.beatenBy.name} ${sgn(r.beatenBy.v)} is higher and ${r.type} bonuses don't stack`);
   return t;
 }
 

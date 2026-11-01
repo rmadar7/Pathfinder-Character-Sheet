@@ -4,7 +4,7 @@ import { ABILITIES } from '../model/types';
 import { mod, sgn } from '../rules/core';
 import { deathLine } from '../rules/mythic-math';
 import { characterIssues } from '../rules/issues';
-import { restHeal } from '../rules/powers';
+import { hasRecuperation, restHeal } from '../rules/powers';
 import { logHp, newDay } from '../rules/actions';
 import { Dice } from './components/Dice';
 import { LevelUp } from './components/LevelUp';
@@ -104,7 +104,7 @@ export function App() {
         <>Conditions cleared</>,
         ch.undead.length > 0 && <span class="no">Your undead do NOT go away — they stay raised</span>,
         ...x.items.map((i) => <>{i.n}: {i.before} → <b>{i.after}</b> (+{i.regain}/day, capped at {i.max})</>),
-        <>HP: {x.hpBefore} → <b>{x.hpAfter}</b> (8 hours' rest restores {x.healed} hp — twice your level, table ruling 5)</>,
+        <>HP: {x.hpBefore} → <b>{x.hpAfter}</b> ({x.recuperated ? 'Recuperation: 8 hours’ rest restores you to full' : `8 hours' rest restores ${x.healed} hp — twice your level, table ruling 5`})</>,
         x.anyNoRefresh && <span class="no">Items with no daily refresh are unchanged</span>,
       ].filter(Boolean),
     });
@@ -182,7 +182,7 @@ export function App() {
         <div class="foot">
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button title="Step back one change" disabled={!st.undoDepth} onClick={undoLast}>↶ Undo</button>
-            <button class="go" title="8 hours' rest. Restores every spell slot, daily power and item charge." onClick={() => void rest()}>☾ Rest · +{restHeal(L)} hp</button>
+            <button class="go" title="8 hours' rest. Restores every spell slot, daily power and item charge." onClick={() => void rest()}>☾ Rest · {hasRecuperation(T) ? 'full hp' : `+${restHeal(L)} hp`}</button>
             <button class="go" disabled={L >= 20} onClick={() => setLeveling(true)}>▲ Level Up</button>
             <button title="Switch between parchment and dark" onClick={() => update((d) => void (d.theme = d.theme === 'dark' ? 'parchment' : 'dark'))}>◐ {ch.theme === 'dark' ? 'Parchment' : 'Dark'}</button>
             <button title="Print or save a clean copy" onClick={() => setPrinting(true)}>🖨 Print</button>

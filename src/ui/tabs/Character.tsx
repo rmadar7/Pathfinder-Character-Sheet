@@ -106,7 +106,7 @@ export function Character() {
             <Pool pool="cmd" title="Enslaved by the Command Undead feat" cap={caps.cmdCap} help="cmdCap" addLabel="Ghoul, wight, skeleton you found…"
               note={<>Cap is your level, not your caster level: {L} + 4 (Undead Master) + {T} (mythic) = <b>{caps.cmdCap} HD</b>.<br />
                 You get <b>{gt} attempts per day</b> — that is how often you can TRY, not how many you can keep.<br />
-                Will save DC {commandUndeadDC(L, m.Cha)} to resist (10 + half your level + Cha).</>} />
+                Will save DC {commandUndeadDC(L, m.Cha)} to resist (10 + half your wizard level + Cha).</>} />
             <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--faint);margin-top:4px;cursor:pointer">
               <input type="checkbox" checked={ch.strictUndead} style="width:auto" onChange={(e) => update((d) => void (d.strictUndead = (e.target as HTMLInputElement).checked))} />
               <span>Strict reading — count Undead Master only toward how many you raise per casting, not the total you hold (drops your cap to {4 * L}). Table ruling 9 uses the generous reading, so this stays off.</span>

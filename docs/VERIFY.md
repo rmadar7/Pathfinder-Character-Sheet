@@ -3,37 +3,26 @@
 Rules ported from v36 that haven't been re-checked against https://www.d20pfsrd.com/ in this
 repo. v36 says it verified most of these; the repo rule (CLAUDE.md §1) is that a claim is only
 verified once someone has read the page and quoted it. The cloud environment used for the
-port couldn't reach d20pfsrd, so everything here is **ported as-is, not changed**.
+port couldn't reach d20pfsrd, so everything here was **ported as-is, not changed**. d20pfsrd
+is reachable through the web-fetch tool (plain `curl` gets `410 Gone`). The site's mythic
+pages live under `/alternative-rule-systems/paizo-rules-systems/mythic/` — the short
+`/mythic` links 404.
 
 When you verify an item: read its own page (not a summary table), quote the governing
 sentence in the code comment, and delete the line here. If the rule turns out different,
 fix it, add a test, and log it in `DECISIONS.md`.
 
-## Suspected problems (check first)
+## Questions for the DM (raised while verifying)
 
-- [ ] **Wild Arcana caster level.** v36 says Wild Arcana "casts at caster level +2". The
-      arcana text as remembered has no CL bonus. *Mythic → Arch-Mage → Wild Arcana*.
-- [ ] **Command Undead save DC for a wizard.** v36 uses 10 + ½ level + **Cha**. Power over
-      Undead may set it to 10 + ½ wizard level + **Int** (or Cha). *Wizard → Arcane Schools →
-      Necromancy → Power over Undead*, and the *Command Undead* feat.
-- [ ] **Concentration DC when not damaged.** v36's helper uses "DC 15 + spell level" when no
-      damage was taken and calls it the grappled/shaken DC. RAW grappled is 10 + grappler's
-      CMB + spell level, entangled is 15 + spell level, casting defensively is 15 + 2× spell
-      level. *Magic → Concentration*.
-- [ ] **Blinded condition.** v36 applies −2 AC but not "loses Dex bonus to AC".
-      *Conditions → Blinded*.
-- [ ] **Enduring Armor value.** v36: armor bonus = 3 + tier. *Mythic → Arch-Mage path
-      abilities → Enduring Armor*.
-- [ ] **Hard to Kill.** v36's HP help says Hard to Kill keeps you *conscious*; its Mythic tab
-      text says you are *not* conscious. One is wrong. *Mythic → Universal abilities → Hard
-      to Kill*.
-- [ ] **Natural 1 on skill checks.** The Scriptorium says "you fail only on a natural 1" for
-      Spellcraft. RAW, a natural 1 is an automatic failure only on attacks and saves, not on
-      skill checks, so with a high enough bonus you can't fail at all. Also check whether the
-      item-creation check allows taking 10. *Skills → Using skills*; *Magic Items → Creating
-      Magic Items*.
-- [ ] **Recuperation** (needed for the tier-3 walkthrough): exact healing and mythic-power
-      cost. *Mythic → Universal abilities*.
+- [ ] **Blinded and CMD.** Blinded "loses its Dexterity bonus to AC"; the CMD rules only say "A
+      flat-footed creature does not add its Dexterity bonus to its CMD". The sheet now drops
+      the Dex bonus and dodge bonuses from AC and touch AC, and dodge from CMD (CMD adds "dodge
+      bonuses to AC", and there are none). It **keeps Dex on CMD** while blinded. Confirm.
+- [ ] **Taking 10 on Scribe Scroll.** d20pfsrd's general rule allows taking 10 "when your
+      character is not in immediate danger or distracted"; Magic Item Creation forbids it only
+      in its optional Dynamic Magic Item Creation rules. The Scriptorium now offers it. Confirm.
+- [ ] **HP at exactly 0.** The HP help says "At 0 you fall unconscious." RAW 0 hp is *disabled*
+      (conscious, limited actions). Not yet checked on *Combat → Injury and Death*.
 
 ## Formulas and tables (believed right, re-check)
 

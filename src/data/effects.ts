@@ -3,7 +3,8 @@
 // Verification status: docs/VERIFY.md. Text is v36's, not yet re-checked against d20pfsrd.
 import type { Duration, Mod } from '../model/types';
 
-export const CONDITIONS: Record<string, { t: string; b: string; mods: Mod[] }> = {
+/** `noDex`: the condition denies your Dexterity bonus to AC (derive.ts applies it, with dodge). */
+export const CONDITIONS: Record<string, { t: string; b: string; mods: Mod[]; noDex?: boolean }> = {
  shaken:     {t:'Shaken',      b:'–2 on attack rolls, saving throws, skill checks and ability checks.',
    mods:[{stat:'atk',type:'untyped',v:-2},{stat:'saves',type:'untyped',v:-2},{stat:'skills',type:'untyped',v:-2}]},
  frightened: {t:'Frightened',  b:'As shaken, and you must flee from the source.',
@@ -22,8 +23,12 @@ export const CONDITIONS: Record<string, { t: string; b: string; mods: Mod[] }> =
    mods:[{stat:'melee',type:'untyped',v:-4}]},
  dazzled:    {t:'Dazzled',     b:'–1 on attack rolls and sight-based Perception checks.',
    mods:[{stat:'atk',type:'untyped',v:-1}]},
- blinded:    {t:'Blinded',     b:'–2 AC, lose your Dex bonus to AC, half speed, –4 on most Dex- and Str-based skills.',
-   mods:[{stat:'ac',type:'untyped',v:-2}]},
+ // d20pfsrd, Conditions → Blinded: "The creature cannot see. It takes a –2 penalty to Armor
+ // Class, loses its Dexterity bonus to AC (if any), and takes a –4 penalty on most Strength-
+ // and Dexterity-based skill checks and on opposed Perception skill checks." v36 applied the
+ // –2 but kept the Dex bonus; fixed (DECISIONS.md). Losing Dex also loses dodge — derive.ts.
+ blinded:    {t:'Blinded',     b:'–2 AC, lose your Dex bonus (and dodge bonuses) to AC, half speed, –4 on most Dex- and Str-based skills.',
+   mods:[{stat:'ac',type:'untyped',v:-2}], noDex:true},
  drained1:   {t:'Energy drain (1 level)', b:'–1 on attacks, saves, skill checks and ability checks per negative level. Also –5 hp per level.',
    mods:[{stat:'atk',type:'untyped',v:-1},{stat:'saves',type:'untyped',v:-1},{stat:'skills',type:'untyped',v:-1}]},
  cover:      {t:'Behind cover',b:'+4 AC and +2 on Reflex saves.',

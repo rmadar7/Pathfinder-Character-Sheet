@@ -8,7 +8,7 @@ import { fmtDur } from '../../rules/duration';
 import { activeEffects } from '../../rules/effects';
 import { adjustedLevel, dcLevel, magicalLineageSpell, metaFeats, metaLabel, preparableIn } from '../../rules/metamagic';
 import { deathLine, mythicPower, surgeDie } from '../../rules/mythic-math';
-import { concentrationDC, restHeal, SAMSARAN_SLAS, schoolPowerUses } from '../../rules/powers';
+import { CONC_CAUSES, concentrationDC, hasRecuperation, restHeal, SAMSARAN_SLAS, schoolPowerUses, type ConcCause } from '../../rules/powers';
 import {
   castCount, isSchoolSpell, prepareSpell, preparedCount, saveDC, schoolPrepared, schoolSlot, slots, specIndex, spellFocusBonus,
 } from '../../rules/spells';
@@ -37,7 +37,7 @@ function highlights(ch: Character, C: Derived) {
   const pct = ch.hpmax ? Math.round((ch.hp / ch.hpmax) * 100) : 0;
   if (ch.hp <= 0) rows.push({ k: 'bad', t: `${ch.hp} hp`, d: ch.tier > 0 ? `Hard to Kill: stable and unconscious. You die at ${deathLine(ch.ab.Con)}.` : 'Dying.' });
   // v36 said "Resting restores 2 × level" here but 1 × level in the help; ruling 5 is 2 ×.
-  else if (pct <= 25) rows.push({ k: 'bad', t: `${ch.hp} of ${ch.hpmax} hp`, d: `Resting restores ${restHeal(L)}.` });
+  else if (pct <= 25) rows.push({ k: 'bad', t: `${ch.hp} of ${ch.hpmax} hp`, d: hasRecuperation(ch.tier) ? 'Resting restores you to full.' : `Resting restores ${restHeal(L)}.` });
   else if (pct <= 50) rows.push({ k: 'warn', t: `${ch.hp} of ${ch.hpmax} hp`, d: 'Bloodied.' });
 
   for (let lv = 1; lv <= 9; lv++) {
@@ -91,7 +91,7 @@ function Highlights({ ch, C }: { ch: Character; C: Derived }) {
 /* ---------- the numbers you get asked for mid-combat ---------- */
 function DefenceStrip({ ch, C }: { ch: Character; C: Derived }) {
   const { m, R } = C, L = ch.lvl;
-  const dexP = `${sgn(m.Dex)} Dex`;
+  const dexP = C.dexDenied && C.dexAC ? `(${sgn(m.Dex)} Dex lost — ${C.dexDenied})` : `${sgn(m.Dex)} Dex`;
   const mf = ch.sv.fort ? ` ${sgn(ch.sv.fort)} misc` : '', mr = ch.sv.ref ? ` ${sgn(ch.sv.ref)} misc` : '', mw = ch.sv.will ? ` ${sgn(ch.sv.will)} misc` : '';
   const reactionary = ch.traits.some((t) => /^reactionary/i.test(t));
   const rows: [string, number | string, string, string, string, boolean?, number?][] = [
@@ -121,14 +121,19 @@ function DefenceStrip({ ch, C }: { ch: Character; C: Derived }) {
 }
 
 function Concentration({ conc }: { conc: number }) {
-  const [dmg, setDmg] = useState(0);
+  const [cause, setCause] = useState<ConcCause>('injured');
+  const [x, setX] = useState(0);
   const [lvl, setLvl] = useState(1);
   const [res, setRes] = useState<{ t: number; dc: number } | null>(null);
-  const dc = concentrationDC(dmg, lvl);
+  const row = CONC_CAUSES.find((c) => c.k === cause)!;
+  const dc = concentrationDC(cause, lvl, x);
   return (
     <div class="conc">
       <span class="concl">Disrupted mid-cast?</span>
-      <label class="bl">damage taken<input type="number" class="w3" value={dmg} min={0} onInput={(e) => setDmg(Math.max(0, parseInt((e.target as HTMLInputElement).value) || 0))} /></label>
+      <label class="bl">what happened<select value={cause} onChange={(e) => { setCause((e.target as HTMLSelectElement).value as ConcCause); setX(0); setRes(null); }}>
+        {CONC_CAUSES.map((c) => <option value={c.k}>{c.t}</option>)}
+      </select></label>
+      {row.x && <label class="bl">{row.x}<input type="number" class="w3" value={x} min={cause === 'grappled' ? undefined : 0} onInput={(e) => { const v = parseInt((e.target as HTMLInputElement).value) || 0; setX(cause === 'grappled' ? v : Math.max(0, v)); }} /></label>}
       <label class="bl">spell level<input type="number" class="w3" value={lvl} min={0} max={9} onInput={(e) => setLvl(Math.max(0, parseInt((e.target as HTMLInputElement).value) || 0))} /></label>
       <span class="concdc">DC <b>{dc}</b></span>
       <button class="go" onClick={() => setRes({ t: roll('Concentration', conc), dc })}>Roll {sgn(conc)}</button>

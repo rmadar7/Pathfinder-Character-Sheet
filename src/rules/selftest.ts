@@ -19,7 +19,8 @@ import { resolve } from './effects';
 import { characterIssues, type Issue } from './issues';
 import { adjustedLevel, dcLevel, magicalLineageSpell } from './metamagic';
 import { mythicPower, surgeDie } from './mythic-math';
-import { schoolPowerUses } from './powers';
+import { failsOn } from './crafting';
+import { commandUndeadDC, concentrationDC, recuperationHourHeal, schoolPowerUses } from './powers';
 import { ranksPerLevel } from './skills';
 import { normalizePrep, prepareSpell, saveDC, slots, specIndex, spellFocusBonus, unprepareAt } from './spells';
 import { STACKING_TYPES, TOUCH_IGNORES } from './stacking';
@@ -93,6 +94,27 @@ export function rulesChecks(ch0: Character): Check[] {
     eq('Getting smaller raises AC but lowers CMD', `${d.AC - C.AC},${d.cmd - C.cmd}`, '1,-1',
       'special size modifier mirrors the AC one');
   }
+
+  {
+    // Blinded: "loses its Dexterity bonus to AC (if any)" and so its dodge bonuses too.
+    const s = scratch(ch);
+    s.conditions = ['blinded'];
+    s.effects.push({ id: 't-dg', name: 'Test dodge +1', on: true, mods: [{ stat: 'ac', type: 'dodge', v: 1 }] });
+    const d = derive(s);
+    const dexBonus = Math.max(0, d.m.Dex);
+    eq('Blinded: −2 AC, no Dex bonus, no dodge', C.AC - d.AC, 2 + dexBonus,
+      `AC ${C.AC} → ${d.AC}; the dodge bonus shows struck through`);
+    eq('Blinded keeps the lost dodge bonus on the receipt', d.R.ac.suppressed.some((r) => r.name === 'Test dodge +1'), true, 'shown struck through');
+  }
+
+  /* ---- verified against d20pfsrd (see DECISIONS.md) ---- */
+  eq('Concentration when hit: 10 + damage + spell level', concentrationDC('injured', 2, 7), 19, '10 + 7 + 2');
+  eq('Concentration when grappled: 10 + grappler CMB + spell level', concentrationDC('grappled', 2, 6), 18, '10 + 6 + 2 — not a flat 15 + level');
+  eq('Concentration casting defensively: 15 + twice spell level', concentrationDC('defensive', 3), 21, '15 + 2 × 3');
+  eq('Concentration when entangled: 15 + spell level', concentrationDC('entangled', 1), 16, '15 + 1');
+  eq('Command Undead DC = 10 + ½ wizard level + Cha', commandUndeadDC(L, m.Cha), 10 + Math.floor(L / 2) + m.Cha, 'Power over Undead');
+  eq('A skill check has no automatic failure on a natural 1', failsOn(10, 9).startsWith('you cannot fail'), true, 'DC 10 with +9: a 1 makes 10');
+  eq('Recuperation hour heals half your full hp', recuperationHourHeal(33), 16, 'half of 33, rounded down');
 
   /* ---- the specialist slot follows the school spell ---- */
   if (ch.specialist) {

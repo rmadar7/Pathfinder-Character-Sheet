@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import { GEARCATS } from '../../data/gear';
 import type { Character, GearItem, GearSlot } from '../../model/types';
 import { sgn } from '../../rules/core';
-import { CRAFT_DAY, failsOn, minScrollCL, scribable } from '../../rules/crafting';
+import { CRAFT_DAY, failsOn, minScrollCL, scribable, takeTenMakes } from '../../rules/crafting';
 import { derive } from '../../rules/derive';
 import { carryCap, catOf, gearWeight, guessCat, loadBand, stockOf, stowedWeight } from '../../rules/gear';
 import { skillTotal, SK } from '../../rules/skills';
@@ -200,7 +200,10 @@ function Scriptorium({ ch }: { ch: Character }) {
             <b>{k.base} gp</b> is what the finished scroll is worth — {cur.lv === 0 ? '½ (a cantrip counts as half a level)' : cur.lv} × {cl} caster level × 25 gp.<br />
             It uses <b>{k.cost} gp</b> of your materials, which is half of that.<br />
             Takes <b>{k.hours} hours</b> — {k.base <= 250 ? 'anything worth 250 gp or less takes 2 hours' : '1 day per 1,000 gp of value, and a working day is 8 hours'}.<br />
-            Spellcraft <b>DC {k.dc}</b> (5 + caster level). You roll {sgn(sc)}, so you fail only on a {failsOn(k.dc, sc)}.<br />
+            Spellcraft <b>DC {k.dc}</b> (5 + caster level). You roll {sgn(sc)}, so {failsOn(k.dc, sc)}.<br />
+            {takeTenMakes(k.dc, sc)
+              ? <>When nothing is rushing or threatening you, you may <b>take 10</b> instead of rolling: 10 {sgn(sc)} = {10 + sc}, which makes DC {k.dc}.<br /></>
+              : <>Taking 10 instead of rolling gives {10 + sc} — short of DC {k.dc}, so roll.<br /></>}
             {cur.lv === 0 ? 'Cantrips cost you no slot at this table.' : <>Your prepared <b>{cur.n}</b> is spent doing this, exactly as if you had cast it.</>}
           </div>
           {!k.canPay && <div class="flag bad">Not enough materials. You need {k.cost} gp and have {C.mats} gp.</div>}

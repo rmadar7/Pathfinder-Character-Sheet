@@ -47,9 +47,21 @@ export function scribable(ch: Character): Scribable[] {
   return out.sort((a, b) => a.lv - b.lv || a.n.localeCompare(b.n));
 }
 
-/** Plain-language failure chance for the Spellcraft check, worded as v36 words it.
- *  VERIFY.md → "Natural 1 on skill checks": RAW a natural 1 is not an automatic failure on a
- *  skill check, so "fail only on a natural 1" may really mean "cannot fail". */
+/** Plain-language failure chance for the Spellcraft check.
+ *  A natural 1 is an automatic failure only where a rule says so. d20pfsrd states it for
+ *  attacks (Combat: "A natural 1 (the d20 comes up 1) on an attack roll is always a miss")
+ *  and combat maneuvers ("rolling a natural 1 is always a failure"); the skill rules
+ *  (d20pfsrd, Skills → Skill Checks) and the Spellcraft page have no such line. So once
+ *  1 + bonus reaches the DC the check cannot fail. v36 said "you fail only on a natural 1"
+ *  there, which was wrong (DECISIONS.md). */
 export function failsOn(dc: number, bonus: number): string {
-  return dc - bonus <= 1 ? 'natural 1' : `roll of ${dc - bonus - 1} or less`;
+  const worst = dc - bonus - 1; // highest d20 face that still fails
+  return worst < 1 ? 'you cannot fail — even a natural 1 makes it' : `you fail on a roll of ${worst} or less`;
 }
+
+/** Taking 10. d20pfsrd, Skills → Taking 10: "When your character is not in immediate danger or
+ *  distracted, you may choose to take 10." Magic Item Creation forbids it only for its optional
+ *  Dynamic Magic Item Creation rules ("Creators can't take 10 or 20"), not for the normal
+ *  check. Taking 20 is out: it needs a check that "carries no penalties for failure", and a
+ *  failed check wastes the materials and time. */
+export const takeTenMakes = (dc: number, bonus: number): boolean => 10 + bonus >= dc;

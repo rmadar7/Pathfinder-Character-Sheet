@@ -303,8 +303,8 @@ Status as of 2026-11-01 (repo build, branch `claude/happy-tesla-5ss4rq`):
 - [x] Port the mythic tab
 - [x] Carry the ten house rulings across verbatim
 - [x] Keep the parchment theme and the dark alternative
-- [ ] Re-cite every ported rule on d20pfsrd (`docs/VERIFY.md`) — blocked in the build
-      environment; d20pfsrd.com was not reachable
+- [ ] Re-cite every ported rule on d20pfsrd (`docs/VERIFY.md`) — "Suspected problems" done
+      2026-11-01; the formulas list remains
 
 ---
 

@@ -35,7 +35,8 @@ export interface Ctx {
 /** Values that depend on tier or level are NAMED formulas, never eval (ARCHITECTURE R5). */
 export const EFFCALC: Record<string, (c: Ctx) => number> = {
   tier: (c) => c.T,
-  // Enduring Armor: armor bonus 3 + tier. VERIFY.md → "Enduring Armor value".
+  // d20pfsrd, Archmage → Enduring Armor (Su): "This armor grants you an armor bonus to AC equal
+  // to 3 + your tier."
   enduringArm: (c) => 3 + c.T,
   halfLevel: (c) => Math.floor(c.L / 2),
   level: (c) => c.L,
@@ -55,6 +56,8 @@ export interface Row {
 }
 export interface SuppressedRow extends Row {
   beatenBy: Row;
+  /** Set when a row is lost for a reason other than stacking (e.g. blinded denies dodge). */
+  why?: string;
 }
 /** A resolved stat and its receipt (ARCHITECTURE R3). */
 export interface Res {

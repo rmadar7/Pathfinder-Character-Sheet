@@ -8,8 +8,8 @@ import type { BookSpell, Character } from '../model/types';
 import { CRAFT_DAY, scrollBase, scrollCost, scrollDC, scrollHours } from './crafting';
 import { mods } from './derive';
 import { durToRounds, parseDuration } from './duration';
-import { mythicPower } from './mythic-math';
-import { restHeal, schoolPowerUses } from './powers';
+import { deathLine, mythicPower } from './mythic-math';
+import { hasRecuperation, RECUPERATION_COST, recuperationHourHeal, restHeal, schoolPowerUses } from './powers';
 import { normalizePrep } from './spells';
 import { spellDetails } from './spellinfo';
 
@@ -57,18 +57,24 @@ export interface DayReceipt {
   healed: number;
   items: { n: string; before: number; after: number; regain: number; max: number }[];
   anyNoRefresh: boolean;
+  /** True when Recuperation (tier 3+) set HP to full rather than the 2 × level of ruling 5. */
+  recuperated: boolean;
 }
 
-/** A night's rest (8 hours). HOUSE RULING 5: heals 2 × level. The prepared list carries over
- *  — a rest refills the slots, it doesn't make you choose again. */
+/** A night's rest (8 hours). HOUSE RULING 5: heals 2 × level. From mythic tier 3, Recuperation
+ *  restores full hit points instead ("you are restored to full hit points after 8 hours of
+ *  rest so long as you aren't dead" — see powers.ts). The prepared list carries over — a rest
+ *  refills the slots, it doesn't make you choose again. */
 export function newDay(ch: Character, now = Date.now()): DayReceipt {
   const m = mods(ch);
   const slotsBack = Object.values(ch.cast).reduce((a, c) => a + (c || []).filter(Boolean).length, 0);
   ch.craft = ch.craft || { mats: 0, hours: 0, pick: '', cl: null, log: [] };
   ch.craft.hours = 0; // a fresh 8 hours at the desk
-  const healed = restHeal(ch.lvl);
   const hpBefore = ch.hp;
-  const hpAfter = Math.min(ch.hpmax, ch.hp + healed);
+  const alive = ch.hp > deathLine(ch.ab.Con);
+  const recuperated = hasRecuperation(ch.tier) && alive;
+  const hpAfter = recuperated ? Math.max(ch.hp, ch.hpmax) : Math.min(ch.hpmax, ch.hp + restHeal(ch.lvl));
+  const healed = hpAfter - hpBefore;
 
   const items: DayReceipt['items'] = [];
   let anyNoRefresh = false;
@@ -89,7 +95,31 @@ export function newDay(ch: Character, now = Date.now()): DayReceipt {
   ch.round = 0;
   if (hpAfter !== hpBefore) logHp(ch, hpBefore, hpAfter, "8 hours' rest", now);
   ch.hp = hpAfter;
-  return { slotsBack, mythic: mythicPower(ch.tier), schoolUses: schoolPowerUses(m.Int), hpBefore, hpAfter, healed, items, anyNoRefresh };
+  return { slotsBack, mythic: mythicPower(ch.tier), schoolUses: schoolPowerUses(m.Int), hpBefore, hpAfter, healed, items, anyNoRefresh, recuperated };
+}
+
+export interface RecuperateResult { ok: boolean; why?: string; hpBefore: number; hpAfter: number; slotsBack: number }
+
+/** Recuperation's 1-hour rest (mythic tier 3+): spend 1 mythic power, regain half your full hit
+ *  points, and regain daily CLASS features — spell slots, arcane bond, school powers. Not mythic
+ *  power ("This rest doesn't refresh uses of mythic power"), not racial spell-likes, not item
+ *  charges. Rule text and citation in powers.ts. */
+export function recuperate(ch: Character, now = Date.now()): RecuperateResult {
+  const hpBefore = ch.hp;
+  const fail = (why: string): RecuperateResult => ({ ok: false, why, hpBefore, hpAfter: hpBefore, slotsBack: 0 });
+  if (!hasRecuperation(ch.tier)) return fail('Recuperation arrives at mythic tier 3.');
+  if (mythicPower(ch.tier) - (ch.used.mythic || 0) < RECUPERATION_COST) return fail('No mythic power left.');
+  if (ch.hp <= deathLine(ch.ab.Con)) return fail('Dead.');
+  ch.used.mythic = (ch.used.mythic || 0) + RECUPERATION_COST;
+  const hpAfter = Math.max(ch.hp, Math.min(ch.hpmax, ch.hp + recuperationHourHeal(ch.hpmax)));
+  const slotsBack = Object.values(ch.cast).reduce((a, c) => a + (c || []).filter(Boolean).length, 0);
+  for (let lv = 1; lv <= 9; lv++) ch.cast[lv] = (ch.prep[lv] || []).map(() => false);
+  ch.used.grave = 0;
+  ch.used.cmd = 0;
+  ch.used.bond = 0;
+  if (hpAfter !== hpBefore) logHp(ch, hpBefore, hpAfter, 'Recuperation (1 hour, 1 mythic power)', now);
+  ch.hp = hpAfter;
+  return { ok: true, hpBefore, hpAfter, slotsBack };
 }
 
 /** Advance the combat round: timed effects tick down; ones that hit zero end. */

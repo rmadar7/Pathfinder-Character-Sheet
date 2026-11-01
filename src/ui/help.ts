@@ -7,7 +7,7 @@ import { sgn } from '../rules/core';
 import { mods } from '../rules/derive';
 import { metaFeats, magicalLineageSpell } from '../rules/metamagic';
 import { deathLine, mythicPower, surgeDie } from '../rules/mythic-math';
-import { commandUndeadDC, graveTouchRounds, restHeal, restHealRAW, schoolPowerUses } from '../rules/powers';
+import { commandUndeadDC, graveTouchRounds, hasRecuperation, recuperationHourHeal, restHeal, restHealRAW, schoolPowerUses } from '../rules/powers';
 import { skillTotal } from '../rules/skills';
 import { saveDC, spellFocusBonus } from '../rules/spells';
 import { capsOf } from '../rules/undead';
@@ -29,7 +29,9 @@ export function helpFor(ch: Character, key: string): Help | null {
     wildArcana: {
       t: 'Wild Arcana',
       b: 'Swift action. Spend 1 Mythic Power and cast ANY arcane spell on your class list — it does NOT have to be prepared, and it does NOT cost you a spell slot. The only limits are that it must be on your list and of a level you can already cast. You may add metamagic if the adjusted level still fits a slot you own.',
-      m: `Casts at caster level ${L + 2} · costs 1 mythic power, no slot`,
+      // d20pfsrd, Archmage → Wild Arcana (Su): "When casting a spell in this way, you treat your
+      // caster level as 2 levels higher for the purpose of any effect dependent on level."
+      m: `Casts at caster level ${L + 2} for anything that depends on level · costs 1 mythic power, no slot`,
     },
     surge: { t: 'Surge', b: 'Spend 1 Mythic Power to add a die to any d20 roll — attack, save, skill, anything. You may do it AFTER you roll but before the DM tells you the result. Missed a save by 3? Surge it.', m: `Your surge die at tier ${T}: ${surgeDie(T)}` },
     hardToKill: {
@@ -95,8 +97,8 @@ export function helpFor(ch: Character, key: string): Help | null {
     init: { t: 'Initiative', b: 'Rolled once at the start of combat to decide turn order. Going early matters a lot for a caster.' },
     conc: {
       t: 'Concentration check',
-      b: 'If something disrupts you mid-cast — you take damage, you’re grappled, you’re on a moving mount — roll this or the spell is lost along with the slot.',
-      m: `Caster level ${L} + Int ${m.Int}. DC = 10 + damage taken + spell level if you were hit; DC 15 + spell level otherwise.`,
+      b: 'If something disrupts you mid-cast — you take damage, you’re grappled, you’re on a moving mount — roll this or the spell is lost along with the slot. Each cause has its own DC: hit while casting, 10 + damage + spell level; grappled, 10 + the grappler’s CMB + spell level; entangled, 15 + spell level; casting defensively, 15 + twice the spell level.',
+      m: `Caster level ${L} + Int ${m.Int}. Pick what happened in the box on the Today tab and it works out the DC.`,
     },
     casterlevel: { t: 'Caster level', b: 'Your power as a caster. Sets spell damage, duration, range, and how well you punch through spell resistance. Equals your wizard level.' },
     classskill: { t: 'Class skill', b: 'A skill your class is trained in. The moment you put even one rank in it, you get a flat +3 on top. That’s why one rank in a class skill is such a good deal.' },
@@ -129,13 +131,16 @@ export function helpFor(ch: Character, key: string): Help | null {
     round: { t: 'Combat round', b: 'One round is 6 seconds. Next round advances it and your spell durations count down automatically.' },
     brug: { t: 'Brug', b: 'Your ogre. He owes you a life debt — he is not a hireling and takes no orders you have to pay for. He rolls his own initiative and acts on his own turn.', m: 'Best move: cast Enlarge Person on him. Huge size, +2 Str, 15-ft. reach.' },
     // v36 said rest heals 1 hp/level and that Hard to Kill keeps you conscious — both
-    // contradicted the sheet (table ruling 5, and the Hard to Kill text above).
+    // contradicted the sheet (table ruling 5, and the Hard to Kill text above). Hard to Kill
+    // only stabilizes; nothing in it lets you act below 0 (citation in data/mythic.ts).
     hp: {
       t: 'Hit points',
       b: T > 0
         ? 'At 0 you fall unconscious. Below 0 you would normally be dying — Hard to Kill stabilizes you automatically, but you stay unconscious until healed.'
         : 'At 0 you fall unconscious. Below 0 you are dying and lose 1 hp a round until stabilized.',
-      m: `A night’s rest heals 2 × level = ${restHeal(L)} hp (table ruling 5; by the book, ${restHealRAW(L)}).`,
+      m: hasRecuperation(T)
+        ? `Recuperation: 8 hours of rest restores you to full. Or spend 1 mythic power and rest 1 hour to regain half your full hp (${recuperationHourHeal(ch.hpmax)}).`
+        : `A night’s rest heals 2 × level = ${restHeal(L)} hp (table ruling 5; by the book, ${restHealRAW(L)}).`,
     },
     amulet: { t: 'Bonded object', b: 'Your wizard’s bonded amulet. You must hold or wear it to cast comfortably — casting without it requires a concentration check (DC 20 + spell level). Once a day it grants you one free unprepared spell.' },
   };

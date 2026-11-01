@@ -100,3 +100,52 @@ Everything else is a straight port. A difference not listed here is a bug in the
   `Kaldaran_Sheet.html`), restorable backups, and a log of every change a format upgrade made
   to the data.
 - Traits are character data, editable on the Character tab (they were hard-coded in v36).
+
+## 2026-11-01 — VERIFY.md "Suspected problems" checked against d20pfsrd
+
+Each rule was read on its own d20pfsrd page; the governing sentence is now quoted in the code
+comment beside the implementation. Four were wrong and are fixed with tests
+(`test/verified-rules.test.ts` and new Diagnostics checks); four were right and only gained
+their citation. No house ruling was changed.
+
+**Fixed**
+
+1. **Concentration DC when not damaged.** v36 used a flat 15 + spell level for anything that
+   wasn't damage and called it the grappled DC. d20pfsrd, *Magic → Concentration*, gives each
+   cause its own DC: "Grappled or pinned while casting — 10 + grappler's CMB + spell level",
+   "Cast defensively — 15 + double spell level", "Entangled while casting — 15 + spell
+   level", plus damage, continuous damage, motion and weather. The Today tab's concentration
+   box now asks *what happened* and uses that row (`concentrationDC` in `rules/powers.ts`).
+2. **Blinded.** d20pfsrd, *Conditions → Blinded*: "It takes a –2 penalty to Armor Class, loses
+   its Dexterity bonus to AC (if any)". v36 applied only the −2. Now Blinded also removes the
+   Dex bonus (never a Dex penalty) from AC and touch AC, and — per *Combat → Dodge Bonuses*,
+   "Any situation that denies you your Dexterity bonus also denies you dodge bonuses" — the
+   dodge bonuses, which stay on the receipt struck through. Kaldaran blinded: AC 17 → 13.
+   Whether Dex also leaves CMD is a DM question (VERIFY.md).
+3. **Natural 1 on skill checks.** The Scriptorium said "you fail only on a natural 1". d20pfsrd
+   makes a natural 1 an automatic failure for attacks ("A natural 1 … on an attack roll is
+   always a miss") and combat maneuvers; *Skills* and *Spellcraft* have no such rule. When
+   1 + bonus meets the DC it now says "you cannot fail — even a natural 1 makes it". It also
+   shows the take-10 result (general *Skills → Taking 10* rule; DM to confirm, VERIFY.md).
+   Taking 20 isn't offered: a failed check wastes materials, and taking 20 needs a check
+   that "carries no penalties for failure".
+4. **Recuperation.** d20pfsrd, *Mythic Heroes → Recuperation (Ex)*: "At 3rd tier, you are
+   restored to full hit points after 8 hours of rest so long as you aren't dead", and 1
+   mythic power + 1 hour of rest regains "half your full hit points" and daily class features,
+   but "doesn't refresh uses of mythic power". v36's text said it "removes most conditions",
+   which the ability doesn't say, and had no numbers. Now: from tier 3, the night's rest
+   restores full hp (better than house ruling 5's 2 × level, which still applies below tier 3);
+   `recuperate()` in `rules/actions.ts` implements the 1-hour version (no button yet — add it
+   for the tier-3 walkthrough).
+
+**Confirmed, citation added**
+
+- **Wild Arcana caster level +2** is right: "you treat your caster level as 2 levels higher
+  for the purpose of any effect dependent on level." Text now says "for anything that depends
+  on level".
+- **Command Undead DC uses Charisma**, not Int: Power over Undead, "10 + 1/2 your wizard level +
+  your Charisma modifier." (The feat's own page says cleric level; the school power replaces
+  that for a wizard.)
+- **Enduring Armor = 3 + tier**: "an armor bonus to AC equal to 3 + your tier."
+- **Hard to Kill does not keep you conscious**: it only stabilizes you and moves the death
+  line to −2 × Con. The Mythic tab was right; the old HP help was wrong (already aligned).
