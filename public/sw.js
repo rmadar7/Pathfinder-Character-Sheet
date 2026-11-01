@@ -23,6 +23,16 @@ self.addEventListener('fetch', (e) => {
     );
     return;
   }
+  // Reference data (compendium/*.json) keeps its name across re-imports: network first so an
+  // update shows up, the cached copy when offline.
+  if (new URL(req.url).pathname.includes('/compendium/')) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); } return res; })
+        .catch(() => caches.match(req)),
+    );
+    return;
+  }
   e.respondWith(
     caches.match(req).then((hit) => hit || fetch(req).then((res) => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }

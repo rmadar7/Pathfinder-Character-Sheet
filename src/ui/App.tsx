@@ -13,6 +13,7 @@ import { Character } from './tabs/Character';
 import { Combat } from './tabs/Combat';
 import { Inventory } from './tabs/Inventory';
 import { Mythic } from './tabs/Mythic';
+import { Lookup } from './tabs/Lookup';
 import { Notes } from './tabs/Notes';
 import { Skills } from './tabs/Skills';
 import { sbView, Spellbook } from './tabs/Spellbook';
@@ -22,7 +23,7 @@ import { esc } from '../rules/core';
 
 const TABS = [
   ['t', 'Today', Today], ['sb', 'Spellbook', Spellbook], ['c', 'Combat', Combat], ['y', 'Mythic', Mythic],
-  ['p', 'Character', Character], ['k', 'Skills', Skills], ['g', 'Inventory', Inventory], ['n', 'Notes', Notes],
+  ['p', 'Character', Character], ['k', 'Skills', Skills], ['g', 'Inventory', Inventory], ['lk', 'Lookup', Lookup], ['n', 'Notes', Notes],
 ] as const;
 type TabId = (typeof TABS)[number][0];
 

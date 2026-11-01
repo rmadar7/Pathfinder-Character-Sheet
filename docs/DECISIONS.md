@@ -203,3 +203,43 @@ types, **inherent** (manuals, *wish*) and **alchemical**. Changing the target re
 that no longer fits. An existing bonus with a type that can't apply is flagged in the editor
 and can't be saved until it's fixed; it isn't changed silently. Rule table quoted in
 `rules/targets.ts`; tests in `test/custom-bonus.test.ts`.
+
+## 2026-11-01 — Phase 1: the compendium and Lookup
+
+**Imported** from the Foundry VTT PF1e packs (upstream commit recorded in
+`public/compendium/index.json`) by `scripts/import-compendium.mjs`: 3,028 spells, 390 feats,
+49 classes, 80 races, 2,803 items (gear, magic items, armor, weapons, technology), 4,679 class
+abilities, 185 buffs. 7.4 MB, about 2 MB compressed; each file loads only when Lookup first
+needs it, then works offline. Monster, template, macro and table packs are left out (HANDOFF
+§1: not a monster manager).
+
+**Lookup tab:** one search box over everything, filters by kind, and for spells "only <my
+class> spells I can cast now". Each entry shows its stats, plain-text rules, source book and
+page, and a link to d20pfsrd. From an entry you can add a spell to the spellbook (at the
+character's class level for it), a feat to the feat list, or an item to the inventory. An
+item's bonuses come along when the sheet can apply them (fixed numbers to targets it knows);
+the rest are counted and left in the description.
+
+**What the source data does and doesn't have** (measured, not assumed):
+- Spells: complete, with level per class, domain and bloodline; every Core Rulebook spell has
+  class levels.
+- Feats: 390. Core Rulebook coverage is near-complete (176); other books are partial (APG 32,
+  Ultimate Combat 20, Unchained 62…). Feats from other books, and mythic feats, aren't
+  there yet. Feat prerequisites are text, pulled out for display, not checked.
+- Items: 135 have full text; 2,196 have only the short "unidentified" text (marked on the
+  entry); 472, mostly mundane gear, have none.
+- Formulas ("@cl"), conditional and speed/damage changes aren't applied yet (Phase 2).
+
+**Links to d20pfsrd are searches, not page links.** Its URLs don't follow one pattern ("Bull's
+Strength, Mass" and "Summon Monster I" 404 under the obvious one), and a wrong link is worse
+than a search.
+
+**Licensing.** The OGL 1.0a text ships with the data (`public/compendium/OGL.txt`) and is shown
+under Notes → Game content license, with the list of books the content comes from. Foundry's
+Section 15 notice covers the OGL, the SRD and Foundry, not the individual Paizo books. If the
+site is ever shared beyond this table, the Section 15 lines for each Paizo book should be
+added from the books themselves; that isn't done from memory here.
+
+**Bug caught by the new tests before shipping:** skill bonuses mapped from items lacked the
+`skill:` prefix, so they would have targeted nothing. A generic "craft" bonus is no longer
+mapped onto Craft (Jewelry).

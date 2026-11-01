@@ -406,6 +406,19 @@
   /* receipts: the suppressed line is the whole point */
   .supp{color:var(--rust);opacity:.92}
   .sit{color:var(--gold)}
+  .lksearch{width:100%;font-size:16px;padding:8px 10px;margin:4px 0 8px}
+  .lkcats{margin-bottom:6px}
+  .lkmine{display:block;margin:4px 0 8px;font-size:13px}
+  .lkr{border-top:1px solid var(--hair)}
+  .lkh{display:block;width:100%;text-align:left;background:none;border:0;padding:8px 2px;cursor:pointer;color:inherit;font:inherit;text-transform:none;letter-spacing:0}
+  .lkn{font-weight:600}
+  .lkm{font-family:var(--mono);font-size:11px;font-weight:600;opacity:.75;margin-left:6px}
+  .lks{display:block;font-size:13px;opacity:.85;margin-top:2px}
+  .lkd{padding:2px 2px 12px}
+  .lktext{white-space:pre-line;margin:8px 0;line-height:1.45}
+  .lkact{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+  .lkact a.sm{text-decoration:none}
+  .ogl{white-space:pre-line;font-size:12px;max-height:340px;overflow:auto;border:1px solid var(--hair);padding:8px}
   .bonusrow{border-left:2px solid var(--hair);padding-left:8px;margin:6px 0}
   .bonusprev{margin-top:6px;font-size:.92em}
   .note2{color:var(--faint);font-family:var(--serif);font-style:italic;font-size:12px}

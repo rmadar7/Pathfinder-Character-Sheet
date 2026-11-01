@@ -129,6 +129,35 @@ const assert = (c, m) => { if (!c) { console.log('FAIL: ' + m); process.exitCode
   await tab('Skills');
   assert(await stealth() === st0 + 2, `custom +2 luck to Stealth applies (${st0} → ${await stealth()})`);
 
+  // 11. Lookup: search the imported compendium and add things to the character.
+  await tab('Lookup');
+  const lk = page.locator('.lksearch');
+  await page.click('.lkcats button:has-text("Spells")');
+  await page.waitForSelector('.lkr');
+  await lk.fill('fireball');
+  await page.waitForFunction(() => document.querySelector('.lkr .lkn')?.textContent === 'Fireball');
+  await page.click('.lkr >> nth=0');
+  assert(await page.isVisible('button:has-text("Add to spellbook (level 3)")'), 'Lookup: Fireball is a level 3 wizard spell');
+  await page.check('.lkmine input');
+  await page.waitForTimeout(200);
+  assert(!(await page.$$eval('.lkr .lkn', (ns) => ns.map((n) => n.textContent))).includes('Fireball'), 'Lookup: "only spells I can cast" hides 3rd-level Fireball at wizard 4');
+  await page.click('.lkcats button:has-text("Feats")');
+  await lk.fill('power attack');
+  await page.waitForFunction(() => document.querySelector('.lkr .lkn')?.textContent === 'Power Attack');
+  await page.click('.lkr >> nth=0');
+  await page.click('button:has-text("Add to my feats")');
+  const acOf = async () => { await tab('Combat'); const t = (await page.$$eval('.big .c', (cs) => cs.map((c) => c.innerText))).find((x) => /^AC/.test(x)); await tab('Lookup'); return parseInt(t.replace(/\D+/, '')); };
+  const ac0 = await acOf();
+  await page.click('.lkcats button:has-text("Items")');
+  await lk.fill('ring of protection +2');
+  await page.waitForFunction(() => document.querySelector('.lkr .lkn')?.textContent === 'Ring of Protection +2');
+  await page.click('.lkr >> nth=0');
+  await page.click('button:has-text("Add to inventory")');
+  const ac1 = await acOf();
+  assert(ac1 === ac0 + 2, `Lookup: Ring of Protection +2, added worn, gives +2 deflection AC (${ac0} → ${ac1})`);
+  await tab('Character');
+  assert((await page.$eval('.pane.on', (p) => p.innerText)).includes('Power Attack'), 'Lookup: Power Attack added to feats');
+
   assert(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.join('; ') : ''));
   await browser.close();
 })();
