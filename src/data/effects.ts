@@ -1,0 +1,76 @@
+// GENERATED from legacy/Kaldaran_Sheet.html (v36) by scripts/gen-tables.mjs, then kept by hand.
+// Conditions and one-click effects (spells and items).
+// Verification status: docs/VERIFY.md. Text is v36's, not yet re-checked against d20pfsrd.
+import type { Duration, Mod } from '../model/types';
+
+/** `noDex`: the condition denies your Dexterity bonus to AC (derive.ts applies it, with dodge). */
+export const CONDITIONS: Record<string, { t: string; b: string; mods: Mod[]; noDex?: boolean }> = {
+ shaken:     {t:'Shaken',      b:'–2 on attack rolls, saving throws, skill checks and ability checks.',
+   mods:[{stat:'atk',type:'untyped',v:-2},{stat:'saves',type:'untyped',v:-2},{stat:'skills',type:'untyped',v:-2}]},
+ frightened: {t:'Frightened',  b:'As shaken, and you must flee from the source.',
+   mods:[{stat:'atk',type:'untyped',v:-2},{stat:'saves',type:'untyped',v:-2},{stat:'skills',type:'untyped',v:-2}]},
+ sickened:   {t:'Sickened',    b:'–2 on attack rolls, weapon damage, saves, skill checks and ability checks.',
+   mods:[{stat:'atk',type:'untyped',v:-2},{stat:'saves',type:'untyped',v:-2},{stat:'skills',type:'untyped',v:-2}]},
+ fatigued:   {t:'Fatigued',    b:'–2 Strength and Dexterity. Cannot run or charge.',
+   mods:[{stat:'str',type:'untyped',v:-2},{stat:'dex',type:'untyped',v:-2}]},
+ exhausted:  {t:'Exhausted',   b:'–6 Strength and Dexterity. Move at half speed.',
+   mods:[{stat:'str',type:'untyped',v:-6},{stat:'dex',type:'untyped',v:-6}]},
+ entangled:  {t:'Entangled',   b:'–2 on attacks, –4 Dexterity, half speed, and you must make a concentration check to cast.',
+   mods:[{stat:'atk',type:'untyped',v:-2},{stat:'dex',type:'untyped',v:-4}]},
+ grappled:   {t:'Grappled',    b:'–2 on attacks and most checks, –4 Dexterity. Casting needs a concentration check (DC 10 + grappler’s CMB + spell level).',
+   mods:[{stat:'atk',type:'untyped',v:-2},{stat:'cmb',type:'untyped',v:-2},{stat:'dex',type:'untyped',v:-4}]},
+ prone:      {t:'Prone',       b:'–4 on melee attacks. +4 AC against ranged attacks, –4 against melee.',
+   mods:[{stat:'melee',type:'untyped',v:-4}]},
+ dazzled:    {t:'Dazzled',     b:'–1 on attack rolls and sight-based Perception checks.',
+   mods:[{stat:'atk',type:'untyped',v:-1}]},
+ // d20pfsrd, Conditions → Blinded: "The creature cannot see. It takes a –2 penalty to Armor
+ // Class, loses its Dexterity bonus to AC (if any), and takes a –4 penalty on most Strength-
+ // and Dexterity-based skill checks and on opposed Perception skill checks." v36 applied the
+ // –2 but kept the Dex bonus; fixed (DECISIONS.md). Losing Dex also loses dodge — derive.ts.
+ blinded:    {t:'Blinded',     b:'–2 AC, lose your Dex bonus (and dodge bonuses) to AC, half speed, –4 on most Dex- and Str-based skills.',
+   mods:[{stat:'ac',type:'untyped',v:-2}], noDex:true},
+ drained1:   {t:'Energy drain (1 level)', b:'–1 on attacks, saves, skill checks and ability checks per negative level. Also –5 hp per level.',
+   mods:[{stat:'atk',type:'untyped',v:-1},{stat:'saves',type:'untyped',v:-1},{stat:'skills',type:'untyped',v:-1}]},
+ cover:      {t:'Behind cover',b:'+4 AC and +2 on Reflex saves.',
+   mods:[{stat:'ac',type:'circumstance',v:4},{stat:'ref',type:'circumstance',v:2}]},
+ fightdef:   {t:'Fighting defensively', b:'+2 dodge bonus to AC, –4 on your attacks, for one round.',
+   mods:[{stat:'ac',type:'dodge',v:2},{stat:'atk',type:'untyped',v:-4}]},
+ totaldef:   {t:'Total defense', b:'+4 dodge bonus to AC for one round. You cannot attack.',
+   mods:[{stat:'ac',type:'dodge',v:4}]}
+};
+
+export const QUICK_EFFECTS: { name: string; src: string; dur: Duration | null; mods: Mod[] }[] = [
+ {name:'Mage Armor',      src:'1st-level spell', dur:{u:'hr', n:'level'},
+  mods:[{stat:'ac',type:'armor',v:4}]},
+ {name:'Shield',          src:'1st-level spell', dur:{u:'min', n:'level'},
+  mods:[{stat:'ac',type:'shield',v:4}]},
+ {name:'Shield of Faith', src:'1st-level spell', dur:{u:'min', n:'level'},
+  mods:[{stat:'ac',type:'deflection',v:2}]},
+ {name:'Barkskin',        src:'2nd-level spell', dur:{u:'min', n:10},
+  mods:[{stat:'ac',type:'natural',v:2}]},
+ {name:'Enlarge Person',  src:'1st-level spell', dur:{u:'min', n:'level'},
+  mods:[{stat:'str',type:'size',v:2},{stat:'dex',type:'size',v:-2},
+        {stat:'ac',type:'size',v:-1},{stat:'atk',type:'size',v:-1}]},
+ {name:'Reduce Person',   src:'1st-level spell', dur:{u:'min', n:'level'},
+  mods:[{stat:'dex',type:'size',v:2},{stat:'str',type:'size',v:-2},
+        {stat:'ac',type:'size',v:1},{stat:'atk',type:'size',v:1}]},
+ {name:'Resistance',      src:'cantrip', dur:{u:'min', n:1},
+  mods:[{stat:'saves',type:'resistance',v:1}]},
+ {name:'Bless',           src:'1st-level spell', dur:{u:'min', n:'level'},
+  mods:[{stat:'atk',type:'morale',v:1}]},
+ {name:'Haste',           src:'3rd-level spell', dur:{u:'rd', n:'level'},
+  mods:[{stat:'ac',type:'dodge',v:1},{stat:'atk',type:'untyped',v:1},{stat:'ref',type:'dodge',v:1}]},
+ {name:'Heroism',         src:'3rd-level spell', dur:{u:'hr', n:10},
+  mods:[{stat:'atk',type:'morale',v:2},{stat:'saves',type:'morale',v:2},{stat:'skills',type:'morale',v:2}]},
+ {name:'Ring of Protection +1', src:'magic item', dur:null,
+  mods:[{stat:'ac',type:'deflection',v:1}]},
+ {name:'Cloak of Resistance +1', src:'magic item', dur:null,
+  mods:[{stat:'saves',type:'resistance',v:1}]},
+ {name:'Bracers of Armor +4', src:'magic item', dur:null,
+  mods:[{stat:'ac',type:'armor',v:4}]},
+ {name:'Amulet of Natural Armor +1', src:'magic item', dur:null,
+  mods:[{stat:'ac',type:'natural',v:1}]},
+ {name:'Ring of the Sophisticate', src:'magic item, worn', dur:null,
+  mods:[{stat:'skill:Know. Local',type:'competence',v:4},
+        {stat:'skill:Sense Motive',type:'competence',v:4}]}
+];
