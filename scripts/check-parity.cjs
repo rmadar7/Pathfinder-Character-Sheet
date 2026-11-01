@@ -1,5 +1,5 @@
 // SWITCH-OVER CHECK (ARCHITECTURE T4). Opens a v36 sheet file and the built app side by side,
-// imports that same v36 file into the app (through the real Import button), then compares
+// loads that same v36 file into the app (through the real Load file button), then compares
 // every number shown on every tab. A number that appears on one side only is a difference.
 //
 // Differences already explained in docs/DECISIONS.md are listed in EXPECTED below with the
@@ -68,9 +68,8 @@ const minus = (a, b) => [...a].filter(([k, n]) => n > (b.get(k) || 0)).map(([k])
   await app.goto(url);
   await app.waitForSelector('.tabs');
   const names = await app.$$eval('.tab', (ts) => ts.map((t) => t.textContent.replace(/\d+$/, '').trim()));
-  await app.click(`.tab >> nth=${names.indexOf('Notes')}`);
-  await app.setInputFiles('input[type=file]', file);
-  await app.waitForFunction(() => /Imported /.test(document.body.innerText), null, { timeout: 10000 });
+  await app.setInputFiles('.foot input[type=file]', file);
+  await app.waitForFunction(() => /Loaded /.test(document.body.innerText), null, { timeout: 10000 });
   const now = {};
   for (let i = 0; i < names.length; i++) {
     await app.click(`.tab >> nth=${i}`);

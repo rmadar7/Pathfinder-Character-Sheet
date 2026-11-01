@@ -243,3 +243,14 @@ added from the books themselves; that isn't done from memory here.
 **Bug caught by the new tests before shipping:** skill bonuses mapped from items lacked the
 `skill:` prefix, so they would have targeted nothing. A generic "craft" bonus is no longer
 mapped onto Craft (Jewelry).
+
+## 2026-11-01 — Save file / Load file in the bottom bar
+
+Ryan expected save and load buttons. They existed (Notes → Export / Import) but were out of
+sight. Now **⤓ Save file** and **⤒ Load file** sit in the bottom bar on every tab, and the
+status line says when the character was last saved to a file ("file saved today", or "not
+saved to a file yet" in red) next to "saved on this device". The sheet still saves itself in
+the browser on every change; the file is the copy the player owns. Loading asks first and backs
+up the current character. Both places use one module (`ui/fileio.ts`) and one button component.
+The old "Import a file…" control was a `<label>` that wasn't styled as a button and couldn't be
+reached by keyboard; it is now a real button.
