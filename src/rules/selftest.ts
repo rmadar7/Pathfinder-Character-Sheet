@@ -79,6 +79,13 @@ export function rulesChecks(ch0: Character): Check[] {
     eq('The losing armor bonus is kept as suppressed, not dropped',
       ac.suppressed.some((r) => r.name === 'Test armor +1'), true, 'so the sheet can show it struck through');
   }
+  {
+    // "All saves" and "Will" are one pool: two luck bonuses don't add.
+    const s = scratch(ch);
+    s.effects.push({ id: 't-l1', name: 'Luck to all saves', on: true, mods: [{ stat: 'saves', type: 'luck', v: 2 }] });
+    s.effects.push({ id: 't-l2', name: 'Luck to Will', on: true, mods: [{ stat: 'will', type: 'luck', v: 1 }] });
+    eq('A bonus to all saves and one to Will, same type: highest only', derive(s).will - C.will, 2, '+2 luck and +1 luck = +2');
+  }
   eq('Dodge bonuses DO stack', STACKING_TYPES.has('dodge'), true, 'dodge, circumstance and untyped all stack');
   {
     const s = scratch(ch);

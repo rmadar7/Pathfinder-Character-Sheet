@@ -256,17 +256,23 @@ general engine. Phase 0 is independent and can ship first.
 
 ---
 
-## 10. Decisions needed from Ryan
+## 10. Decisions (Ryan, 2026-11-01)
 
-1. **Data source:** approve the Foundry PF1e packs (OGL content) as the compendium source,
-   with d20pfsrd as the verification and link target?
-2. **Which books first?** Core Rulebook only, or Core + APG + Ultimate Magic/Combat + Mythic
-   Adventures from day one? (The import can take everything; validation effort scales with
-   it.)
-3. **Who is it for?** Ryan's table only (other players' characters too?), or published for
-   anyone? This decides how much polish the builder needs and whether the OGL page is public.
-4. **Optional rules:** background skills, unchained rules (actions, skills, classes),
-   automatic bonus progression, Pathfinder Society legality — which are on at this table?
-5. **Phase 0 first?** Finish the port and switch from v36 before starting the general work
-   (recommended), or start Phase 1 in parallel?
-6. **Sync:** needed soon (several devices / sharing with the DM), or later?
+1. **Data source: Foundry PF1e packs — approved**, as long as it is Pathfinder 1st Edition
+   only (the import rejects anything else).
+2. **Books: undecided.** Recommendation: import every Paizo PF1e book the packs carry (the
+   import costs the same either way), with a *Books allowed* setting that defaults to all of
+   them. Verification effort follows what a character actually uses, not the size of the
+   import, so a big import doesn't create a big checking backlog.
+3. **Audience: Ryan's table for now, built so it can open up later.** Concretely: no
+   Kaldaran-specific code in new work (G1–G3 already require this), multi-character storage
+   from Phase 2, and the OGL page from Phase 1. No accounts, no public builder polish yet.
+4. **Optional rules: none.** No background skills, unchained, ABP or PFS. Not building a
+   switchboard for them now.
+5. **Custom bonuses: needed.** The DM hands out items and boons that don't match the book. The
+   sheet must let the player build one from structured lists (what it applies to, bonus type,
+   amount, optional "only when…"), so it stacks and shows its math like everything else. A
+   first version shipped with the switch-over (DECISIONS.md); in Phase 2 it becomes the
+   *Custom content* layer in §3, covering feats and abilities as well as bonuses.
+6. **Phase 0 first: yes.** Finish switching off v36 before the general work.
+7. **Sync / other devices: not now.** Phase 8 stays parked.

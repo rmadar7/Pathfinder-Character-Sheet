@@ -26,6 +26,14 @@ export function Receipt({ parts, res, hideSuppressed }: { parts: ComponentChildr
         </>
       ))}
       {!hideSuppressed && <Suppressed res={res} />}
+      {(res.situational || []).map((r) => (
+        <>
+          <br />
+          <span class="sit">
+            {sgn(r.v)} {r.type !== 'untyped' && <b>{r.type} </b>}{r.name} — <i>only {r.when}</i>, so not in this total. Add it when it applies.
+          </span>
+        </>
+      ))}
     </>
   );
 }
@@ -53,6 +61,7 @@ export function receiptText(parts: string[], res: Res, opts: { hideSuppressed?: 
   if (!opts.hideSuppressed)
     for (const r of res.suppressed)
       t += ` · LOST ${sgn(r.v)} ${r.type} ${r.name} — ` + (r.why ?? `${r.beatenBy.name} ${sgn(r.beatenBy.v)} is higher and ${r.type} bonuses don't stack`);
+  for (const r of res.situational || []) t += ` · ${sgn(r.v)} ${r.name} only ${r.when} (not in the total)`;
   return t;
 }
 

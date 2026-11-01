@@ -22,7 +22,7 @@ export function Skills() {
     <tr><th>Skill</th><th>Ab</th><th style="width:52px;text-align:right">Rank</th><th style="width:52px;text-align:right">Misc</th><th style="text-align:right">Total</th></tr>
   );
   const row = (name: string) => {
-    const s = skillLine(ch, name, m, all)!;
+    const s = skillLine(ch, name, m)!;
     const parts = [`${sgn(m[s.ab])} ${s.ab}`];
     if (s.ranks) parts.push(`+${s.ranks} rank${s.ranks > 1 ? 's' : ''}`);
     if (s.cls) parts.push('+3 class');

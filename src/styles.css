@@ -405,6 +405,9 @@
   .rcpt button{margin-top:10px}
   /* receipts: the suppressed line is the whole point */
   .supp{color:var(--rust);opacity:.92}
+  .sit{color:var(--gold)}
+  .bonusrow{border-left:2px solid var(--hair);padding-left:8px;margin:6px 0}
+  .bonusprev{margin-top:6px;font-size:.92em}
   .note2{color:var(--faint);font-family:var(--serif);font-style:italic;font-size:12px}
   .sechd{margin-top:14px;padding-top:9px;border-top:1px solid var(--line);
     font-family:var(--mono);font-size:10px;color:var(--dim);

@@ -2,7 +2,7 @@
 import type { Ability, Character } from '../model/types';
 import { mods, type Mods } from './derive';
 import { resolve } from './effects';
-import { mergeRes, type Res } from './stacking';
+import type { Res } from './stacking';
 
 /** [name, key ability, class skill for a wizard]. CHARACTER-SPECIFIC: wizard class skills. */
 export const SK: [string, Ability, boolean][] = [
@@ -30,11 +30,12 @@ export interface SkillLine {
   total: number;
 }
 
-export function skillLine(ch: Character, name: string, m: Mods = mods(ch), all: Res = resolve(ch, 'skills')): SkillLine | null {
+export function skillLine(ch: Character, name: string, m: Mods = mods(ch)): SkillLine | null {
   const def = SK.find((x) => x[0] === name);
   if (!def) return null;
   const s = ch.skills[name] || { r: 0, m: 0 };
-  const fx = mergeRes(all, resolve(ch, 'skill:' + name));
+  // One pool with the all-skills key, so two luck bonuses don't stack (stacking.ts).
+  const fx = resolve(ch, ['skills', 'skill:' + name]);
   const cls = def[2] && s.r > 0 ? 3 : 0;
   return { name, ab: def[1], classSkill: def[2], ranks: s.r, misc: s.m, cls, fx, total: m[def[1]] + s.r + cls + s.m + fx.total };
 }

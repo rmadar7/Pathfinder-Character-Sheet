@@ -98,13 +98,13 @@ function DefenceStrip({ ch, C }: { ch: Character; C: Derived }) {
     ['AC', C.AC, R.ac.suppressed.length ? `${R.ac.suppressed.length} suppressed` : 'incl. effects', 'Armor Class', receiptText(['10 base', dexP], R.ac), true],
     ['Touch', C.touch, '', 'Touch AC', receiptText(['10 base', dexP], R.acT, { hideSuppressed: true }) + '. Armor, shield and natural armor never count against a touch attack.', true],
     ['Flat-ft', C.ff, '', 'Flat-Footed AC', receiptText(['10 base', 'you lose your ' + dexP + ' bonus'], R.acFF, { hideSuppressed: true }) + '. Dodge bonuses drop too.', true],
-    ['Fort', sgn(C.fort), '', 'Fortitude save', receiptText([`${poor(L)} base (wizard poor)`, `${sgn(m.Con)} Con${mf}`], mergeRes(R.svAll, R.fortR)), false, C.fort],
-    ['Ref', sgn(C.ref), '', 'Reflex save', receiptText([`${poor(L)} base (wizard poor)`, `${sgn(m.Dex)} Dex${mr}`], mergeRes(R.svAll, R.refR)), false, C.ref],
-    ['Will', sgn(C.will), 'good save', 'Will save', receiptText([`${good(L)} base (wizard good)`, `${sgn(m.Wis)} Wis${mw}`], mergeRes(R.svAll, R.willR)), false, C.will],
+    ['Fort', sgn(C.fort), '', 'Fortitude save', receiptText([`${poor(L)} base (wizard poor)`, `${sgn(m.Con)} Con${mf}`], R.fortR), false, C.fort],
+    ['Ref', sgn(C.ref), '', 'Reflex save', receiptText([`${poor(L)} base (wizard poor)`, `${sgn(m.Dex)} Dex${mr}`], R.refR), false, C.ref],
+    ['Will', sgn(C.will), 'good save', 'Will save', receiptText([`${good(L)} base (wizard good)`, `${sgn(m.Wis)} Wis${mw}`], R.willR), false, C.will],
     ['Init', sgn(C.init), '', 'Initiative', receiptText([`${sgn(m.Dex)} Dex`, `${sgn(ch.initMisc)} misc${reactionary && ch.initMisc === 2 ? ' (Reactionary)' : ''}`], R.initR), false, C.init],
     ['CMD', C.cmd, '', 'Combat Maneuver Defense', receiptText(['10', `${sgn(C.bab)} BAB`, `${sgn(m.Str)} Str`, `${sgn(m.Dex)} Dex`, C.sizeCM ? `${sgn(C.sizeCM)} special size` : ''], mergeRes(R.acToCMD, R.cmdR)), true],
-    ['Ranged touch', sgn(C.ranged), 'rays', 'Ranged / ray attack', receiptText([`${sgn(C.bab)} BAB`, `${sgn(m.Dex)} Dex`], mergeRes(R.atkR, R.rngR)), false, C.ranged],
-    ['Concentration', sgn(C.conc), 'if disrupted', 'Concentration', receiptText([`${L} caster level`, `${sgn(m.Int)} Int`], mergeRes(R.clR, R.concR)) + '. DC 10 + damage taken + spell level.', false, C.conc],
+    ['Ranged touch', sgn(C.ranged), 'rays', 'Ranged / ray attack', receiptText([`${sgn(C.bab)} BAB`, `${sgn(m.Dex)} Dex`], R.rngR), false, C.ranged],
+    ['Concentration', sgn(C.conc), 'if disrupted', 'Concentration', receiptText([`${L} caster level`, `${sgn(m.Int)} Int`], mergeRes(R.clR, R.concR)) + '. The DC depends on what disrupted you; the box below works it out.', false, C.conc],
   ];
   // AC, touch, flat-footed and CMD are numbers an enemy rolls against, so no dice handle.
   return (

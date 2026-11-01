@@ -7,9 +7,9 @@
 // A tapped tip is "pinned": it ignores mouseout and closes on Escape or a click elsewhere.
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { esc } from '../../rules/core';
+import { esc, sgn } from '../../rules/core';
 import { derive } from '../../rules/derive';
-import { saveDC, spellFocusBonus } from '../../rules/spells';
+import { dcFx, saveDC, spellFocusBonus } from '../../rules/spells';
 import { CRB, compGloss, spellDetails, splitSaveSR } from '../../rules/spellinfo';
 import type { BookSpell, Character } from '../../model/types';
 import { helpFor } from '../help';
@@ -41,12 +41,14 @@ function spellHTML(ch: Character, sp0: BookSpell): TipContent {
     html:
       `<h5>${esc(sp.n)}</h5>` +
       `<div class="meta">${sp.lv === 0 ? 'Cantrip' : 'Level ' + sp.lv} &middot; ${esc(sp.sc)}${sp.gm ? ' &middot; DM ruling' : ''}${sp.unsourced ? ' &middot; unsourced' : ''}</div>` +
-      `<div class="dcbig">Save DC ${dc} = 10 + ${sp.lv} spell level + ${m.Int} Int${fb ? ` <span class="src">+${fb} Spell Focus (${esc(sp.sc)})</span>` : ''}</div>` +
+      `<div class="dcbig">Save DC ${dc} = 10 + ${sp.lv} spell level + ${m.Int} Int${fb ? ` <span class="src">+${fb} Spell Focus (${esc(sp.sc)})</span>` : ''}` +
+      `${dcFx(ch).applied.map((r) => ` <span class="src">${sgn(r.v)} ${esc(r.name)}</span>`).join('')}</div>` +
       `<div class="body">${esc(sp.d || 'No description recorded.')}</div>` +
       `<table class="sb2">${row('Cast', sp.ct)}${sp.cp ? `<tr><td class="k">Needs</td><td class="v">${esc(sp.cp)}${costly ? ' <span class="warn">costs money</span>' : ''}</td></tr>` : ''}` +
       `${row('Range', sp.rg)}${row('Affects', sp.tg)}${row('Lasts', sp.du)}${row('Save', save)}${row('Spell resistance', sr)}</table>` +
       (gloss.length ? `<div class="gloss">${gloss.map(esc).join('<br>')}</div>` : '') +
-      `<div class="foot2">Caster level ${ch.lvl}${sp.lv === 0 ? ' &middot; unlimited, cast at will' : ''}</div>`,
+      `<div class="foot2">Caster level ${ch.lvl}${sp.lv === 0 ? ' &middot; unlimited, cast at will' : ''}` +
+      `${sp.url && /^https:\/\/www\.d20pfsrd\.com\//.test(sp.url) ? ` &middot; <a href="${esc(sp.url)}" target="_blank" rel="noopener">d20pfsrd</a>` : ''}</div>`,
   };
 }
 

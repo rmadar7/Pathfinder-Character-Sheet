@@ -46,14 +46,14 @@ export function Combat() {
           <div class="card">
             <h3>Saving Throws</h3>
             <MathRow label="Fortitude" total={<Rollable v={C.fort} label="Fortitude save" />} help="fort">
-              <Receipt parts={[<><b>{poor(L)}</b> wizard base (poor progression)</>, <>{sgn(m.Con)} <b>Con</b></>, ch.sv.fort ? `${sgn(ch.sv.fort)} misc` : '']} res={mergeRes(R.svAll, R.fortR)} />
+              <Receipt parts={[<><b>{poor(L)}</b> wizard base (poor progression)</>, <>{sgn(m.Con)} <b>Con</b></>, ch.sv.fort ? `${sgn(ch.sv.fort)} misc` : '']} res={R.fortR} />
               {lifebound && <><br /><span class="src">Lifebound</span>: +2 more vs. death effects, negative energy, negative levels, and Con checks to stabilize.</>}
             </MathRow>
             <MathRow label="Reflex" total={<Rollable v={C.ref} label="Reflex save" />} help="ref">
-              <Receipt parts={[<><b>{poor(L)}</b> wizard base (poor)</>, <>{sgn(m.Dex)} <b>Dex</b></>, ch.sv.ref ? `${sgn(ch.sv.ref)} misc` : '']} res={mergeRes(R.svAll, R.refR)} />
+              <Receipt parts={[<><b>{poor(L)}</b> wizard base (poor)</>, <>{sgn(m.Dex)} <b>Dex</b></>, ch.sv.ref ? `${sgn(ch.sv.ref)} misc` : '']} res={R.refR} />
             </MathRow>
             <MathRow label="Will" total={<Rollable v={C.will} label="Will save" />} help="will">
-              <Receipt parts={[<><b>{good(L)}</b> wizard base (good progression)</>, <>{sgn(m.Wis)} <b>Wis</b></>, ch.sv.will ? `${sgn(ch.sv.will)} misc` : '']} res={mergeRes(R.svAll, R.willR)} />
+              <Receipt parts={[<><b>{good(L)}</b> wizard base (good progression)</>, <>{sgn(m.Wis)} <b>Wis</b></>, ch.sv.will ? `${sgn(ch.sv.will)} misc` : '']} res={R.willR} />
             </MathRow>
             <div class="sechd">Misc modifiers</div>
             {(['fort', 'ref', 'will'] as const).map((k) => (
@@ -74,10 +74,10 @@ export function Combat() {
               Wizard is a <b>poor BAB</b> class — half your level, rounded down. Level {L} ÷ 2 = <b>{C.bab}</b>.
             </MathRow>
             <MathRow label="Melee attack" total={<Rollable v={C.melee} label="Melee attack" />}>
-              <Receipt parts={[<>{sgn(C.bab)} <b>BAB</b></>, <>{sgn(m.Str)} <b>Str</b></>]} res={mergeRes(R.atkR, R.melR)} />
+              <Receipt parts={[<>{sgn(C.bab)} <b>BAB</b></>, <>{sgn(m.Str)} <b>Str</b></>]} res={R.melR} />
             </MathRow>
             <MathRow label="Ranged / ray attack" total={<Rollable v={C.ranged} label="Ranged touch attack" />}>
-              <Receipt parts={[<>{sgn(C.bab)} <b>BAB</b></>, <>{sgn(m.Dex)} <b>Dex</b></>]} res={mergeRes(R.atkR, R.rngR)} />
+              <Receipt parts={[<>{sgn(C.bab)} <b>BAB</b></>, <>{sgn(m.Dex)} <b>Dex</b></>]} res={R.rngR} />
               <br /><span class="note2">Use this for Acid Arrow, Scorching Ray, and any ranged touch spell.</span>
             </MathRow>
             <MathRow label="CMB" total={sgn(C.cmb)} help="cmb">

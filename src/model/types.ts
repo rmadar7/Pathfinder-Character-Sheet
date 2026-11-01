@@ -11,6 +11,8 @@ export interface Mod {
   type?: string;
   v?: number;
   calc?: string;
+  /** Situational: applies only "vs fear", "while raging"… Shown beside the total, never in it. */
+  when?: string;
 }
 
 export interface Duration {
@@ -49,6 +51,8 @@ export interface BookSpell {
   sr?: string;
   /** No source book found for this spell; description written by hand. */
   unsourced?: boolean;
+  /** The spell's own d20pfsrd page. */
+  url?: string;
 }
 
 export interface Uses {

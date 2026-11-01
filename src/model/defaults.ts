@@ -3,7 +3,7 @@
 
 import type { Character, Used } from './types';
 
-export const SCHEMA = 9;
+export const SCHEMA = 10;
 
 export const blankUsed = (): Used => ({ mythic: 0, grave: 0, cmd: 0, cl: 0, dw: 0, st: 0, bond: 0 });
 

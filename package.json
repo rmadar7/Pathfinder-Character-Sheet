@@ -13,7 +13,8 @@
     "extract": "node scripts/extract-legacy.mjs",
     "check:legacy": "node scripts/check-legacy.cjs",
     "check:app": "node scripts/check-app.cjs",
-    "check:flows": "node scripts/check-flows.cjs"
+    "check:flows": "node scripts/check-flows.cjs",
+    "check:parity": "node scripts/check-parity.cjs"
   },
   "dependencies": {
     "preact": "^11.1.1"

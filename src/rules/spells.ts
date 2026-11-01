@@ -4,6 +4,8 @@
 import type { BookSpell, Character } from '../model/types';
 import { bonusSp, spellsPerDay } from './core';
 import { mods } from './derive';
+import { resolve } from './effects';
+import type { Res } from './stacking';
 
 /** A specialist wizard gets an extra slot at every spell level he can cast.
  *  "A specialist wizard receives an additional spell slot of each spell level he can cast,
@@ -60,8 +62,11 @@ export function spellFocusBonus(ch: Character, school: string | null | undefined
 }
 
 /** Spell save DC = 10 + spell level + Int modifier + Spell Focus. */
+/** Bonuses from effects to every spell save DC (an item or a DM gift: "+1 to all spell DCs"). */
+export const dcFx = (ch: Character): Res => resolve(ch, 'dc');
+
 export const saveDC = (ch: Character, lv: number, school: string | null | undefined, intMod = mods(ch).Int): number =>
-  10 + lv + intMod + spellFocusBonus(ch, school);
+  10 + lv + intMod + spellFocusBonus(ch, school) + dcFx(ch).total;
 
 /** Old saves stored nulls and short arrays; a misaligned pair silently marks the wrong slot
  *  spent, so normalise before anything reads them. Mutates `ch` (call inside update()). */

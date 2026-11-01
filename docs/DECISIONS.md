@@ -149,3 +149,46 @@ their citation. No house ruling was changed.
 - **Enduring Armor = 3 + tier**: "an armor bonus to AC equal to 3 + your tier."
 - **Hard to Kill does not keep you conscious**: it only stabilizes you and moves the death
   line to −2 × Con. The Mythic tab was right; the old HP help was wrong (already aligned).
+
+## 2026-11-01 — Ryan's scoping answers; finishing the switch-over from v36
+
+**Decisions** (full list in `PLAN.md` §10): the Foundry PF1e packs are approved as the
+compendium source, PF1e only; books undecided; just this table for now but built to open up;
+no optional rules; switch off v36 before the general work; no multi-device sync yet. The DM
+hands out non-standard items and boons, so the sheet needs **custom bonuses** built from
+structured lists, not free text.
+
+**Parity with v36 is confirmed and now checkable.** `scripts/check-parity.cjs` imports a v36
+file through the real Import button and compares every number on every tab with what v36 shows
+for the same file. Every difference is either listed (with its reason) or fails the check. On
+the repo's copy of Kaldaran it passes: no unexplained differences. Run it on Ryan's newest
+v36 file on switch-over day (`docs/SWITCHOVER.md`).
+
+**Approved clean-up 3 done:** Detect Poison, Dancing Lights, Flare and Open/Close now have
+descriptions written from their own d20pfsrd pages, with the link on the spell card. Applied
+by migration step 10 (schema 10), logged, and only where the description was empty.
+
+**Custom bonuses (first version).** "Build a custom bonus" in the effects manager, and the
+same bonus rows in the item editor: name, where it came from, how long it lasts, then any
+number of bonuses, each picked from lists: *amount*, *bonus type* (with its stacking rule in
+plain words), *what it applies to* (grouped: defence, saves, attacks, spellcasting, every
+skill by name, ability scores, initiative), and optional *only when…* ("vs fear"). A
+situational bonus is listed under the number it affects, not added to it. Custom effects can
+be edited later. Items can now carry several bonuses (the editor used to edit only the first).
+
+**Bugs found on the way, fixed with tests**
+
+1. **"All spell DCs" and "Speed" did nothing.** Both were offered as effect targets, but no
+   code read them, so a bonus to either was silently ignored. Spell DCs now include effect
+   bonuses (shown on the spell card); Speed is removed from the list until speed is computed.
+   A test now adds a bonus to every target the editor offers and fails if any number doesn't
+   move.
+2. **Same-type bonuses stacked across "all" and "one".** "All saves" and "Will" (likewise
+   all attacks / melee, all skills / Stealth) were resolved separately and added, so a +2
+   luck to all saves and a +1 luck to Will gave +3. Same-type bonuses to the same roll don't
+   stack, so it is now +2, with the +1 shown struck through. `resolve()` takes several keys
+   and stacks them as one pool.
+3. **Concentration help on Today still said "DC 10 + damage taken + spell level"** for every
+   case; it now points to the box that works out the DC by cause.
+4. **`check:flows` dark-theme step was racy.** It read the theme attribute straight after the
+   click, before the effect that sets it had run; it now waits for it. Not an app bug.

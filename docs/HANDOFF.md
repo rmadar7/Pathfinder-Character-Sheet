@@ -303,6 +303,8 @@ Status as of 2026-11-01 (repo build, branch `claude/happy-tesla-5ss4rq`):
 - [x] Port the mythic tab
 - [x] Carry the ten house rulings across verbatim
 - [x] Keep the parchment theme and the dark alternative
+- [x] Parity with v36 on every tab (`scripts/check-parity.cjs`); approved data clean-ups applied
+- [ ] Switch Ryan over (`docs/SWITCHOVER.md`): merge to `main`, enable Pages, import his newest v36 file
 - [ ] Re-cite every ported rule on d20pfsrd (`docs/VERIFY.md`) — "Suspected problems" done
       2026-11-01; the formulas list remains
 
