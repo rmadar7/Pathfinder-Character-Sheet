@@ -2,7 +2,9 @@
 
 This is a **Pathfinder 1st Edition character sheet** for a player who is new to the system.
 Read `docs/HANDOFF.md` before your first change — it explains what the project is for and
-what is already built.
+what is already built. Then read `docs/ARCHITECTURE.md` — the structural rules (layers,
+receipts, migrations, UI conventions) that every change must follow. Rules not yet
+re-verified against d20pfsrd are tracked in `docs/VERIFY.md`; decisions in `docs/DECISIONS.md`.
 
 ---
 
