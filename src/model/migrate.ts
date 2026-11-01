@@ -201,12 +201,49 @@ function step9(o: Any, now: number): void {
   }
 }
 
+/** Approved clean-up 3 (DECISIONS.md, 2026-11-01): four cantrips had no description. Text is
+ *  written from each spell's own d20pfsrd page, linked in `url`. Only an EMPTY description is
+ *  filled; anything the player wrote is left alone. */
+const D20 = 'https://www.d20pfsrd.com/magic/all-spells/';
+const CANTRIP_TEXT: Record<string, { d: string; url: string }> = {
+  'detect poison': {
+    url: D20 + 'd/detect-poison/',
+    d: 'Tells you whether one creature, one object or a 5-ft. cube is poisoned or poisonous. A DC 20 Wisdom check names the exact poison; you can try a DC 20 Craft (alchemy) check instead, before or after the Wisdom check. Blocked by 1 ft. of stone, 1 in. of common metal, a thin sheet of lead, or 3 ft. of wood or dirt.',
+  },
+  'dancing lights': {
+    url: D20 + 'd/dancing-lights/',
+    d: 'Up to four floating lights like torches or lanterns (or glowing orbs, or one faint glowing humanoid shape), all within 10 ft. of each other. You move them up to 100 ft. a round without concentrating. Lasts 1 minute; only one casting at a time, and a light that goes out of range winks out.',
+  },
+  flare: {
+    url: D20 + 'f/flare/',
+    d: 'A burst of light in one creature\'s face: it is dazzled for 1 minute unless it makes a Fortitude save. No effect on creatures that cannot see or are already dazzled.',
+  },
+  'open/close': {
+    url: D20 + 'o/open-close/',
+    d: 'Opens or closes a door, chest, window, box or similar portal, of up to 30 lb. Does nothing if a bar, lock or similar holds it shut. Focus: a brass key.',
+  },
+};
+
+function step10(o: Any, now: number): void {
+  const log = (what: string) => (o.changelog = o.changelog || []).push({ at: now, schema: 10, what });
+  for (const b of o.book || []) {
+    const fix = CANTRIP_TEXT[(b.n || '').toLowerCase()];
+    if (!fix) continue;
+    if (!(b.d || '').trim()) {
+      b.d = fix.d;
+      log(`${b.n}: description added from its d20pfsrd page (it had none).`);
+    }
+    if (!b.url) b.url = fix.url;
+  }
+}
+
 /** Bring any saved document up to the current schema and fill missing fields. */
 export function migrate(raw: unknown, now = Date.now()): Character {
   const o: Any = structuredClone(raw ?? {}) as Any;
   const from = o.schema || 0;
   if (from < 8) legacySteps(o);
   if (from < 9) step9(o, now);
+  if (from < 10) step10(o, now);
   o.schema = SCHEMA;
   return withDefaults(o);
 }

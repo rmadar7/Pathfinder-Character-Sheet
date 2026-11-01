@@ -196,4 +196,5 @@ npx vite preview &       # serve dist/ on :4173
 npm run check:app        # every tab renders, no errors, key numbers, diagnostics
 npm run check:flows      # suppression, casting, reload, rest, stale tab, undo, level-up, theme
 npm run check:legacy     # the v36 sheet still renders and passes its own diagnostics
+npm run check:parity     # every number v36 shows for a file, the new sheet shows (T4)
 ```

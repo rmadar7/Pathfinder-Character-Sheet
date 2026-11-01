@@ -11,7 +11,7 @@ export const STACKING_TYPES = new Set(['dodge', 'circumstance', 'untyped', 'raci
 
 export const BONUS_TYPES = [
   'armor', 'shield', 'natural', 'deflection', 'dodge', 'size', 'enhancement', 'competence',
-  'insight', 'luck', 'morale', 'profane', 'sacred', 'resistance', 'circumstance', 'untyped',
+  'insight', 'luck', 'morale', 'profane', 'sacred', 'resistance', 'circumstance', 'racial', 'trait', 'untyped',
 ];
 
 /** AC bonus types a touch attack ignores. */
@@ -22,7 +22,7 @@ export const STATS: [string, string][] = [
   ['ac', 'Armor Class'], ['fort', 'Fortitude'], ['ref', 'Reflex'], ['will', 'Will'],
   ['saves', 'All saves'], ['init', 'Initiative'], ['atk', 'All attacks'], ['melee', 'Melee attack'],
   ['ranged', 'Ranged / ray attack'], ['cmb', 'CMB'], ['cmd', 'CMD'], ['cl', 'Caster level'],
-  ['conc', 'Concentration'], ['dc', 'All spell DCs'], ['skills', 'All skills'], ['speed', 'Speed'],
+  ['conc', 'Concentration'], ['dc', 'All spell DCs'], ['skills', 'All skills'],
   ['str', 'Strength score'], ['dex', 'Dexterity score'], ['con', 'Constitution score'],
   ['int', 'Intelligence score'], ['wis', 'Wisdom score'], ['cha', 'Charisma score'],
 ];
@@ -54,6 +54,9 @@ export interface Row {
   type: string;
   v: number;
 }
+export interface SituationalRow extends Row {
+  when: string;
+}
 export interface SuppressedRow extends Row {
   beatenBy: Row;
   /** Set when a row is lost for a reason other than stacking (e.g. blinded denies dodge). */
@@ -64,6 +67,8 @@ export interface Res {
   total: number;
   applied: Row[];
   suppressed: SuppressedRow[];
+  /** Bonuses that apply only in a situation ("vs fear"): listed, not added. */
+  situational?: SituationalRow[];
 }
 
 export const EMPTY_RES: Res = { total: 0, applied: [], suppressed: [] };
@@ -72,21 +77,27 @@ export interface ResolveOpts {
   skipTypes?: Set<string>;
 }
 
-/** Resolve one stat across a list of ACTIVE effects. */
-export function resolveFrom(effects: Effect[], stat: string, ctx: Ctx, opts: ResolveOpts = {}): Res {
+/** Resolve a stat across a list of ACTIVE effects. Pass several keys when they feed one number
+ *  ("saves" + "fort", "skills" + "skill:Stealth"): they stack as ONE pool, so a +2 luck to all
+ *  saves and a +1 luck to Fortitude give +2, not +3. Resolving them apart and adding the totals
+ *  got that wrong. */
+export function resolveFrom(effects: Effect[], stat: string | string[], ctx: Ctx, opts: ResolveOpts = {}): Res {
+  const stats = Array.isArray(stat) ? stat : [stat];
   const applied: Row[] = [];
   const suppressed: SuppressedRow[] = [];
+  const situational: SituationalRow[] = [];
   const best: Record<string, Row> = {};
   let total = 0;
 
   for (const e of effects) {
     for (const mo of e.mods || []) {
-      if (mo.stat !== stat) continue;
+      if (!stats.includes(mo.stat)) continue;
       const type = (mo.type || 'untyped').toLowerCase();
       if (opts.skipTypes && opts.skipTypes.has(type)) continue;
       const v = modValue(mo, ctx);
       if (!v) continue;
       const row: Row = { name: e.name, src: e.src, kind: e.kind, type, v };
+      if (mo.when && mo.when.trim()) { situational.push({ ...row, when: mo.when.trim() }); continue; }
       if (v < 0 || STACKING_TYPES.has(type)) {
         // penalties and stacking types always count
         total += v;
@@ -111,7 +122,7 @@ export function resolveFrom(effects: Effect[], stat: string, ctx: Ctx, opts: Res
     applied.push(r);
   }
   applied.sort((a, b) => b.v - a.v);
-  return { total, applied, suppressed };
+  return situational.length ? { total, applied, suppressed, situational } : { total, applied, suppressed };
 }
 
 /** Two receipts added together — "all saves" plus "Will only", say. */
@@ -120,5 +131,6 @@ export function mergeRes(a: Res, b: Res): Res {
     total: a.total + b.total,
     applied: [...a.applied, ...b.applied],
     suppressed: [...a.suppressed, ...b.suppressed],
+    situational: [...(a.situational || []), ...(b.situational || [])],
   };
 }

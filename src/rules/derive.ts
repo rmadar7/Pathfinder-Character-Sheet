@@ -89,8 +89,9 @@ export function derive(ch: Character): Derived {
   const ff = 10 + (m.Dex - dexAC) + acFF.total;
 
   const svAll = resolve(ch, 'saves');
-  const fortR = resolve(ch, 'fort'), refR = resolve(ch, 'ref'), willR = resolve(ch, 'will');
-  const atkR = resolve(ch, 'atk'), melR = resolve(ch, 'melee'), rngR = resolve(ch, 'ranged');
+  // Each save / attack pools its own key with the "all" key so same-type bonuses don't stack.
+  const fortR = resolve(ch, ['saves', 'fort']), refR = resolve(ch, ['saves', 'ref']), willR = resolve(ch, ['saves', 'will']);
+  const atkR = resolve(ch, 'atk'), melR = resolve(ch, ['atk', 'melee']), rngR = resolve(ch, ['atk', 'ranged']);
   const initR = resolve(ch, 'init'), cmbR = resolve(ch, 'cmb'), cmdR = resolve(ch, 'cmd');
   const clR = resolve(ch, 'cl'), concR = resolve(ch, 'conc');
 
@@ -113,12 +114,12 @@ export function derive(ch: Character): Derived {
     m, AC, touch, ff, bab, size, sizeCM, dexAC, dexDenied,
     cmb: bab + m.Str + sizeCM + cmbR.total,
     cmd: 10 + bab + m.Str + m.Dex + sizeCM + acToCMD.total + cmdR.total,
-    fort: poor(L) + m.Con + ch.sv.fort + svAll.total + fortR.total,
-    ref: poor(L) + m.Dex + ch.sv.ref + svAll.total + refR.total,
-    will: good(L) + m.Wis + ch.sv.will + svAll.total + willR.total,
+    fort: poor(L) + m.Con + ch.sv.fort + fortR.total,
+    ref: poor(L) + m.Dex + ch.sv.ref + refR.total,
+    will: good(L) + m.Wis + ch.sv.will + willR.total,
     init: m.Dex + ch.initMisc + initR.total,
-    melee: bab + m.Str + atkR.total + melR.total,
-    ranged: bab + m.Dex + atkR.total + rngR.total,
+    melee: bab + m.Str + melR.total,
+    ranged: bab + m.Dex + rngR.total,
     conc: L + m.Int + clR.total + concR.total,
     cl: L + clR.total,
     R: { ac, acT, acFF, svAll, fortR, refR, willR, atkR, melR, rngR, initR, cmbR, cmdR, clR, concR, acToCMD },

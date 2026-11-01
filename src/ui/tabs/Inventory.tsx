@@ -1,13 +1,13 @@
 // INVENTORY — one list for everything owned, supplies, carrying capacity, money, Scriptorium.
 import { useState } from 'preact/hooks';
 import { GEARCATS } from '../../data/gear';
-import type { Character, GearItem, GearSlot } from '../../model/types';
+import type { Character, GearItem, GearSlot, Mod } from '../../model/types';
 import { sgn } from '../../rules/core';
 import { CRAFT_DAY, failsOn, minScrollCL, scribable, takeTenMakes } from '../../rules/crafting';
 import { derive } from '../../rules/derive';
 import { carryCap, catOf, gearWeight, guessCat, loadBand, stockOf, stowedWeight } from '../../rules/gear';
-import { skillTotal, SK } from '../../rules/skills';
-import { BONUS_TYPES, STATS } from '../../rules/stacking';
+import { skillTotal } from '../../rules/skills';
+import { BonusRows } from '../components/BonusEditor';
 import { scribe, scribeCheck } from '../../rules/actions';
 import { roll } from '../components/Dice';
 import { ModSummary } from '../components/EffectsManager';
@@ -21,23 +21,21 @@ const SLOT_TITLE: Record<GearSlot, string> = {
 };
 
 function GearEditor({ g, i, onDone }: { g: GearItem | null; i: number | null; onDone: () => void }) {
-  const fx0 = g?.fx?.[0] || { stat: 'ac', type: 'untyped', v: 0 };
   const [f, setF] = useState({
     n: g?.n || '', qty: g?.qty ?? 1, cat: g ? catOf(g) : 'gear', wt: g?.wt || 0, desc: g?.desc || '', got: g?.got || '',
     um: g?.uses ? String(g.uses.max) : '', uc: g?.uses ? String(g.uses.cur) : '', ur: g?.uses?.regain ? String(g.uses.regain) : '',
-    fs: fx0.stat, ft: fx0.type || 'untyped', fv: fx0.v || 0,
   });
+  const [fx, setFx] = useState<Mod[]>(structuredClone(g?.fx || []));
   const val = (k: keyof typeof f) => (e: Event) => setF({ ...f, [k]: (e.target as HTMLInputElement).value });
   const save = () => {
     const n = f.n.trim();
     if (!n) return;
-    const um = parseInt(f.um), uc = parseInt(f.uc), ur = parseInt(f.ur), fv = +f.fv || 0;
+    const um = parseInt(f.um), uc = parseInt(f.uc), ur = parseInt(f.ur);
     const item: GearItem = {
       id: g?.id || 'g' + Date.now(), n, desc: f.desc.trim(), got: f.got.trim(),
       wt: Math.max(0, +f.wt || 0), qty: Math.max(0, +f.qty || 0), slot: g?.slot || 'carried', cat: f.cat, cls: g?.cls || 'r', help: g?.help,
       uses: um > 0 ? { max: um, cur: isNaN(uc) ? um : Math.min(uc, um), regain: ur > 0 ? ur : 0 } : null,
-      // One bonus here covers most items; keep any further bonuses the item already had.
-      fx: fv ? [{ stat: f.fs, type: f.ft, v: fv }, ...(g?.fx?.slice(1) || [])] : g?.fx?.slice(1) || [],
+      fx: fx.filter((m) => m.v).map((m) => (m.when?.trim() ? { ...m, when: m.when.trim() } : { stat: m.stat, type: m.type, v: m.v })),
     };
     update((d) => {
       if (i == null) { if (item.fx!.length) item.slot = 'worn'; d.gear.push(item); }
@@ -61,16 +59,8 @@ function GearEditor({ g, i, onDone }: { g: GearItem | null; i: number | null; on
         <label class="gil">left now</label><input type="number" class="w3" min={0} value={f.uc} placeholder="—" onInput={val('uc')} />
         <label class="gil">regains per day</label><input type="number" class="w3" min={0} value={f.ur} placeholder="—" onInput={val('ur')} title="Blank or 0 = it never comes back." />
       </div>
-      <div class="gesec">Bonus it gives while worn <span class="note2">— leave the amount at 0 if it gives none</span></div>
-      <div class="gerow">
-        <select style="flex:1;min-width:140px" value={f.fs} onChange={val('fs')}>
-          {STATS.map(([k, l]) => <option value={k}>{l}</option>)}
-          {SK.map(([n]) => <option value={'skill:' + n}>Skill — {n}</option>)}
-        </select>
-        <select style="width:110px" value={f.ft} onChange={val('ft')}>{BONUS_TYPES.map((t) => <option>{t}</option>)}</select>
-        <input type="number" class="w3" value={f.fv} onInput={val('fv')} title="Bonus (negative for a penalty)" />
-      </div>
-      {(g?.fx?.length || 0) > 1 && <div class="note2">This edits the item's first bonus. Its other {g!.fx!.length - 1} bonus{g!.fx!.length > 2 ? 'es are' : ' is'} kept as they are.</div>}
+      <div class="gesec">Bonuses it gives while worn <span class="note2">— none is fine</span></div>
+      <BonusRows mods={fx} onChange={setFx} />
       <div class="gerow" style="margin-top:10px">
         <button class="go" onClick={save}>{i == null ? 'Add to inventory' : 'Save changes'}</button>
         <button onClick={onDone}>Cancel</button>

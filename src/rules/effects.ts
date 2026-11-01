@@ -62,7 +62,7 @@ export const allEffects = (ch: Character): Effect[] => [...sysEffects(ch), ...(c
 export const activeEffects = (ch: Character): Effect[] => allEffects(ch).filter((e) => e.on !== false);
 
 /** Resolve one stat for this character, with its receipt. */
-export const resolve = (ch: Character, stat: string, opts?: ResolveOpts): Res =>
+export const resolve = (ch: Character, stat: string | string[], opts?: ResolveOpts): Res =>
   resolveFrom(activeEffects(ch), stat, ctxOf(ch), opts);
 
 const ABKEYS: Record<Ability, string> = { Str: 'str', Dex: 'dex', Con: 'con', Int: 'int', Wis: 'wis', Cha: 'cha' };

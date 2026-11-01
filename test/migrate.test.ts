@@ -46,3 +46,26 @@ describe('legacy migrations 0 → 8', () => {
     expect(ch.gear.find((g) => /Sophisticated/.test(g.n))!.fx!.length).toBe(2);
   });
 });
+
+describe('migration → v10: cantrip descriptions (approved clean-up 3)', () => {
+  const ch = kaldaran();
+  const get = (n: string) => ch.book.find((b) => b.n === n)!;
+  it('fills the four empty descriptions, each with its d20pfsrd link', () => {
+    for (const n of ['Detect Poison', 'Dancing Lights', 'Flare', 'Open/Close']) {
+      expect(get(n).d, n).toBeTruthy();
+      expect(get(n).url, n).toMatch(/^https:\/\/www\.d20pfsrd\.com\/magic\/all-spells\//);
+    }
+  });
+  it('logs each one', () =>
+    expect(ch.changelog.filter((c) => c.schema === 10).length).toBe(4));
+  it('never overwrites a description the player wrote', () => {
+    const raw = rawKaldaran();
+    raw.book.find((b: any) => b.n === 'Flare').d = 'my own note';
+    const c = migrate(raw, 0);
+    expect(c.book.find((b) => b.n === 'Flare')!.d).toBe('my own note');
+  });
+  it('is not re-applied to a document already at v10', () => {
+    const again = migrate(ch, 0);
+    expect(again.changelog.filter((c) => c.schema === 10).length).toBe(4);
+  });
+});

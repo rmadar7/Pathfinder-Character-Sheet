@@ -3,15 +3,15 @@
 
 import { useState } from 'preact/hooks';
 import { CONDITIONS, QUICK_EFFECTS } from '../../data/effects';
-import type { Character, Mod } from '../../model/types';
+import type { Character, Effect, Mod } from '../../model/types';
 import { sgn } from '../../rules/core';
 import { durToRounds, fmtDur } from '../../rules/duration';
 import { allEffects, ctxOf, mythicEffectId } from '../../rules/effects';
-import { BONUS_TYPES, modValue, STATS } from '../../rules/stacking';
+import { modValue } from '../../rules/stacking';
+import { targetLabel as statName } from '../../rules/targets';
+import { CustomEffectForm } from './BonusEditor';
 import { update, useCh } from '../store';
 
-const STAT_LABEL = Object.fromEntries(STATS);
-const statName = (st: string) => (st.startsWith('skill:') ? st.slice(6) : STAT_LABEL[st] || st);
 
 /** "+5 armor to Armor Class · −2 to Dexterity score" */
 export function ModSummary({ ch, mods }: { ch: Character; mods: Mod[] }) {
@@ -23,6 +23,7 @@ export function ModSummary({ ch, mods }: { ch: Character; mods: Mod[] }) {
         <>
           {i > 0 && <> &nbsp;·&nbsp; </>}
           {sgn(modValue(mo, ctx))} {mo.type && mo.type !== 'untyped' ? mo.type + ' ' : ''}to <b>{statName(mo.stat)}</b>
+          {mo.when && <i> — only {mo.when}</i>}
         </>
       ))}
     </>
@@ -30,12 +31,13 @@ export function ModSummary({ ch, mods }: { ch: Character; mods: Mod[] }) {
 }
 
 export const modSummaryText = (ch: Character, mods: Mod[]) =>
-  mods.map((mo) => `${sgn(modValue(mo, ctxOf(ch)))} ${mo.type && mo.type !== 'untyped' ? mo.type + ' ' : ''}to ${statName(mo.stat)}`).join(' · ');
+  mods.map((mo) => `${sgn(modValue(mo, ctxOf(ch)))} ${mo.type && mo.type !== 'untyped' ? mo.type + ' ' : ''}to ${statName(mo.stat)}${mo.when ? ` (only ${mo.when})` : ''}`).join(' · ');
 
 export function EffectsManager() {
   const ch = useCh();
   const [adding, setAdding] = useState(false);
-  const [form, setForm] = useState({ n: '', stat: 'ac', type: 'untyped', v: 2, rds: '' });
+  const [building, setBuilding] = useState(false);
+  const [editing, setEditing] = useState<string | null>(null);
   const all = allEffects(ch);
 
   const toggle = (id: string, on: boolean) =>
@@ -65,18 +67,14 @@ export function EffectsManager() {
       });
     });
 
-  const addCustom = () => {
-    const n = form.n.trim();
-    if (!n) return;
-    const rds = parseInt(form.rds);
-    update((d) => {
-      d.effects.push({
-        id: 'fx' + Date.now(), name: n, src: 'added by hand', kind: 'manual', on: true,
-        dur: isNaN(rds) ? null : { u: 'rd', n: rds }, left: isNaN(rds) ? null : rds,
-        mods: [{ stat: form.stat, type: form.type, v: +form.v || 0 }],
-      });
+  /** Add a new custom effect, or replace the one being edited (same id). */
+  const saveCustom = (e: Effect | null) => {
+    if (e) update((d) => {
+      const at = d.effects.findIndex((x) => x.id === e.id);
+      if (at >= 0) d.effects[at] = e; else d.effects.push(e);
     });
-    setForm({ ...form, n: '' });
+    setBuilding(false);
+    setEditing(null);
   };
 
   return (
@@ -96,6 +94,9 @@ export function EffectsManager() {
               </div>
               {e.locked && <span class="lockpill">{e.kind === 'condition' ? 'condition' : e.kind === 'item' ? 'worn' : 'mythic'}</span>}
               <span class="fxt">{fmtDur(e.left)}</span>
+              {e.kind === 'manual' && (
+                <button class="x" title="Edit this effect" onClick={() => setEditing(editing === e.id ? null : e.id)}>✎</button>
+              )}
               {!e.locked && (
                 <button class="x" title="Remove this effect entirely" onClick={() => update((d) => void (d.effects = d.effects.filter((x) => x.id !== e.id)))}>
                   ×
@@ -105,6 +106,7 @@ export function EffectsManager() {
             <div class="fxm">
               <ModSummary ch={ch} mods={e.mods} />
             </div>
+            {editing === e.id && <CustomEffectForm initial={ch.effects.find((x) => x.id === e.id)} onDone={saveCustom} />}
           </div>
         );
       })}
@@ -133,23 +135,10 @@ export function EffectsManager() {
               </button>
             );
           })}
-          <div class="sechd">Or build one by hand</div>
-          <div class="addrow">
-            <input placeholder="Name — e.g. Cat's Grace" style="flex:2;min-width:120px" value={form.n}
-              onInput={(e) => setForm({ ...form, n: (e.target as HTMLInputElement).value })}
-              onKeyDown={(e) => e.key === 'Enter' && addCustom()} />
-            <select style="flex:1;min-width:120px" value={form.stat} onChange={(e) => setForm({ ...form, stat: (e.target as HTMLSelectElement).value })}>
-              {STATS.map(([k, l]) => <option value={k}>{l}</option>)}
-            </select>
-            <select style="width:110px" value={form.type} onChange={(e) => setForm({ ...form, type: (e.target as HTMLSelectElement).value })}>
-              {BONUS_TYPES.map((t) => <option>{t}</option>)}
-            </select>
-            <input type="number" class="w3" value={form.v} title="bonus (negative for a penalty)"
-              onInput={(e) => setForm({ ...form, v: parseInt((e.target as HTMLInputElement).value) || 0 })} />
-            <input type="number" class="w3" placeholder="rds" value={form.rds} title="rounds — blank for ongoing"
-              onInput={(e) => setForm({ ...form, rds: (e.target as HTMLInputElement).value })} />
-            <button class="go" onClick={addCustom}>Add</button>
-          </div>
+          <div class="sechd">Something else — a DM gift, a blessing, a homebrew bonus</div>
+          {building
+            ? <CustomEffectForm onDone={saveCustom} />
+            : <button class="sm" onClick={() => setBuilding(true)}>+ Build a custom bonus</button>}
         </>
       )}
     </div>

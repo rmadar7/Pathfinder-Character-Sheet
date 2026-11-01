@@ -88,6 +88,9 @@ const assert = (c, m) => { if (!c) { console.log('FAIL: ' + m); process.exitCode
 
   // 8. Dark theme.
   await page.click('button:has-text("Dark")');
+  // The theme attribute is set in an effect after the re-render; reading it straight after the
+  // click raced it and failed intermittently.
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark', null, { timeout: 3000 }).catch(() => {});
   const theme = await page.evaluate(() => document.documentElement.dataset.theme);
   const hair = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--hair').trim());
   assert(theme === 'dark' && hair !== '' && !hair.includes('var('), 'dark theme on, hairline token resolves (v36 had it self-referential)');
@@ -99,6 +102,32 @@ const assert = (c, m) => { if (!c) { console.log('FAIL: ' + m); process.exitCode
   await tab('Spellbook');
   await page.click('.sp .spn >> nth=0');
   assert(await page.$('#tip h5'), 'tapping a spell pins its card');
+
+  // 10. A DM gift built by hand: +2 luck to Stealth, and +2 morale to Will only vs fear.
+  await tab('Skills');
+  const stealth = async () => parseInt((await page.$eval('tr:has-text("Stealth")', (r) => r.innerText)).match(/[+−-]\d+\s*$/)[0].replace('−', '-'));
+  const st0 = await stealth();
+  await tab('Combat');
+  const will = async () => (await page.$$eval('.big .c', (cs) => cs.map((c) => c.innerText))).find((t) => /WILL/i.test(t));
+  const will0 = await will();
+  await page.click('button:has-text("Add an effect or condition")');
+  await page.click('button:has-text("Build a custom bonus")');
+  const form = page.locator('.gedit').last();
+  await form.locator('input').nth(0).fill('Lucky coin');
+  await form.locator('input').nth(1).fill('the DM');
+  const row = (i) => form.locator('.bonusrow').nth(i);
+  await row(0).locator('input[type=number]').fill('2');
+  await row(0).locator('select').nth(0).selectOption('luck');
+  await row(0).locator('select').nth(1).selectOption('skill:Stealth');
+  await form.locator('button:has-text("another bonus")').click();
+  await row(1).locator('input[type=number]').fill('2');
+  await row(1).locator('select').nth(0).selectOption('morale');
+  await row(1).locator('select').nth(1).selectOption('will');
+  await row(1).locator('input').nth(1).fill('vs fear');
+  await form.locator('button:has-text("Add it")').click();
+  assert(await will() === will0, 'situational bonus (vs fear) is not added to Will');
+  await tab('Skills');
+  assert(await stealth() === st0 + 2, `custom +2 luck to Stealth applies (${st0} → ${await stealth()})`);
 
   assert(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.join('; ') : ''));
   await browser.close();
