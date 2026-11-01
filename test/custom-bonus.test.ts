@@ -7,7 +7,8 @@ import { derive } from '../src/rules/derive';
 import { abilityScores, resolve } from '../src/rules/effects';
 import { skillTotal, SK } from '../src/rules/skills';
 import { saveDC } from '../src/rules/spells';
-import { TARGET_GROUPS } from '../src/rules/targets';
+import { TARGET_GROUPS, typeFits, typesFor } from '../src/rules/targets';
+import { BONUS_TYPES } from '../src/rules/stacking';
 import { kaldaran } from './helpers';
 
 const snapshot = (ch: Character) => {
@@ -66,5 +67,28 @@ describe('items carry several bonuses', () => {
     const ac0 = derive(ch).AC, st0 = skillTotal(ch, 'Stealth');
     ch.gear.push({ id: 'cloak', n: 'Cloak of the DM', slot: 'worn', fx: [{ stat: 'ac', type: 'deflection', v: 1 }, { stat: 'skill:Stealth', type: 'competence', v: 5 }] });
     expect([derive(ch).AC - ac0, skillTotal(ch, 'Stealth') - st0]).toEqual([1, 5]);
+  });
+});
+
+describe('bonus types offered per target (d20pfsrd bonus table, "Can Affect")', () => {
+  it('armor, shield, deflection, natural and dodge only on AC/CMD', () => {
+    for (const t of ['armor', 'shield', 'deflection', 'natural', 'dodge']) {
+      expect(typeFits(t, 'ac'), t).toBe(true);
+      expect(typeFits(t, 'str'), t).toBe(false);
+      expect(typeFits(t, 'skill:Stealth'), t).toBe(false);
+    }
+  });
+  it('Strength takes untyped, enhancement, inherent, morale, alchemical, size, racial, trait', () =>
+    expect(new Set(typesFor('str', BONUS_TYPES))).toEqual(new Set(['untyped', 'enhancement', 'inherent', 'morale', 'alchemical', 'size', 'racial', 'trait'])));
+  it('morale applies to Str, Dex and Con but not Int', () => {
+    expect(typeFits('morale', 'dex')).toBe(true);
+    expect(typeFits('morale', 'int')).toBe(false);
+  });
+  it('resistance only on saves', () => {
+    expect(typeFits('resistance', 'will')).toBe(true);
+    expect(typeFits('resistance', 'ac')).toBe(false);
+  });
+  it('every target offers untyped first and at least one choice', () => {
+    for (const g of TARGET_GROUPS) for (const [k] of g.items) expect(typesFor(k, BONUS_TYPES)[0]).toBe('untyped');
   });
 });
