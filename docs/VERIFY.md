@@ -27,6 +27,11 @@ fix it, add a test, and log it in `DECISIONS.md`.
 - [ ] **Hard to Kill.** v36's HP help says Hard to Kill keeps you *conscious*; its Mythic tab
       text says you are *not* conscious. One is wrong. *Mythic → Universal abilities → Hard
       to Kill*.
+- [ ] **Natural 1 on skill checks.** The Scriptorium says "you fail only on a natural 1" for
+      Spellcraft. RAW, a natural 1 is an automatic failure only on attacks and saves, not on
+      skill checks, so with a high enough bonus you can't fail at all. Also check whether the
+      item-creation check allows taking 10. *Skills → Using skills*; *Magic Items → Creating
+      Magic Items*.
 - [ ] **Recuperation** (needed for the tier-3 walkthrough): exact healing and mythic-power
       cost. *Mythic → Universal abilities*.
 

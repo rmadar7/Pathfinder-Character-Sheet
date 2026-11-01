@@ -178,7 +178,8 @@ export interface Character {
   strictUndead: boolean;
   hplog: HpLog[];
   theme: 'parchment' | 'dark';
-  brug: Brug;
+  /** CHARACTER-SPECIFIC: Kaldaran's ogre companion. Absent for other characters. */
+  brug?: Brug;
   rulings: { umFeatCountsAsSpell?: boolean; [k: string]: unknown };
   subschool: string;
   specialist: string;
