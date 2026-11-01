@@ -17,6 +17,8 @@ src/
   model/     the character document: types, defaults, migrations, storage
   rules/     Pathfinder rules as pure functions. No DOM, no Preact, no storage.
   data/      static reference data (spell list, mythic tables, conditions…)
+  compendium/ the imported PF1e compendium: types, on-demand loading, search, and
+             conversion of an entry into a spellbook line / feat / inventory item
   ui/        Preact components. Reads rules, never re-implements them.
     tabs/    one file per tab
 test/        Vitest. Mirrors src/rules.
@@ -24,7 +26,7 @@ legacy/      the v36 single-file sheet. Reference only; never edited.
 data/        extracted JSON (character seed + CRB spells)
 ```
 
-Dependencies point **one way only**: `ui → rules → model/types`. `rules` never imports from
+Dependencies point **one way only**: `ui → compendium → rules → model/types`. `rules` never imports from
 `ui`. `model/storage` is only imported by the store (`ui/store.ts`).
 
 ## 2. Rules layer (`src/rules/`)
@@ -63,6 +65,15 @@ rule is a house ruling, say so and name the ruling number from the Table Rulings
 been re-checked against d20pfsrd in this repo is listed in `docs/VERIFY.md`. When you verify
 one, remove it from that list and add the citation to the code comment. Never mark something
 verified from memory.
+
+**C1. The compendium is generated, never hand-edited.** `public/compendium/*.json` is written
+by `scripts/import-compendium.mjs` from the Foundry PF1e packs; re-run it and review the diff it
+prints. Text is converted to plain text at import, so no imported HTML reaches the page.
+Corrections to imported data go in a separate, cited layer (PLAN.md §3), not in these files.
+
+**C2. Converting an entry onto the character carries only what the sheet can apply.** A
+bonus whose target or formula the engine can't handle yet is counted and shown as "described,
+not applied", never silently dropped (`compendium/convert.ts`).
 
 ## 3. Model layer (`src/model/`)
 

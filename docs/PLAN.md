@@ -229,7 +229,7 @@ with the app green and usable; Kaldaran keeps working throughout.
 | # | Phase | Delivers | Size | Done when |
 |---|---|---|---|---|
 | 0 | **Finish the port** | v36 parity confirmed, PR #1 merged, switch Ryan over from v36 | S | Ryan plays a session on it |
-| 1 | **Compendium pipeline** | Import script, our schema, spells + feats + classes + races + conditions + items in `data/compendium/`, search UI, d20pfsrd links, OGL page | M | Search finds any core spell/feat with correct class levels |
+| 1 ✅ | **Compendium pipeline** | Import script, our schema, spells + feats + classes + races + conditions + items in `data/compendium/`, search UI, d20pfsrd links, OGL page | M | Search finds any core spell/feat with correct class levels |
 | 2 | **General character model** | Classes array, races, feats/traits as compendium references with choices, generic uses/resources, formula language, derivation graph. Kaldaran migrated with parity tests | L | Kaldaran identical; a fighter 1 can be represented |
 | 3 | **Core math, all classes** | Everything in §4.2 except spellcasting and companions; conditions as data; validation | L | Golden martial character matches its stat block |
 | 4 | **Spellcasting, all casters** | Prepared + spontaneous, per-class tables, domains/bloodlines/schools, metamagic generalised | M–L | Golden cleric and sorcerer match |

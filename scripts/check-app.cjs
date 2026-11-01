@@ -19,10 +19,10 @@ const { chromium } = require('playwright');
     console.log(`${tabs[i].padEnd(10)} ${len} chars`);
     if (shots) await page.screenshot({ path: `${shots}/tab-${i + 1}-${tabs[i].toLowerCase()}.png`, fullPage: true });
   }
-  await page.click('.tab >> nth=2');
+  await page.click('.tab:has-text("Combat")');
   const big = await page.$$eval('.big .c', (cs) => cs.map((c) => c.querySelector('.l').textContent + ' ' + c.querySelector('.v').textContent).join(' | '));
   console.log('Combat: ' + big);
-  await page.click('.tab >> nth=7');
+  await page.click('.tab:has-text("Notes")');
   const diag = await page.$$eval('.pane.on .tiny', (ts) => ts.map((t) => t.textContent.trim()).filter((t) => /RULES ENGINE|YOUR CHARACTER/.test(t)));
   console.log(diag.join('\n'));
   console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'no errors');

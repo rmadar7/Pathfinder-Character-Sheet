@@ -1,6 +1,8 @@
 // NOTES — table rulings, open questions, what a rest restores, diagnostics, backups,
 // export/import, description and backstory.
 import { useEffect, useState } from 'preact/hooks';
+import { loadIndex, loadOGL } from '../../compendium/load';
+import type { CompendiumIndex } from '../../compendium/types';
 import { fromImport, fromLegacyHtml, listBackups, toExport, type Backup } from '../../model/storage';
 import { mods } from '../../rules/derive';
 import { mythicPower } from '../../rules/mythic-math';
@@ -98,6 +100,31 @@ function Backups() {
   );
 }
 
+/** Open Game License notice for the Lookup data (OGL §6, §10: the license travels with the
+ *  content, with the copyright notices of what it came from). */
+function GameContentLicense() {
+  const [open, setOpen] = useState(false);
+  const [ogl, setOgl] = useState('');
+  const [ix, setIx] = useState<CompendiumIndex | null>(null);
+  useEffect(() => { if (open && !ix) { loadIndex().then(setIx).catch(() => {}); loadOGL().then(setOgl).catch(() => {}); } }, [open]);
+  return (
+    <div class="card">
+      <h3>Game content license</h3>
+      <div class="note2">
+        The rules text in Lookup is Open Game Content under the Open Game License 1.0a, imported from the Foundry VTT
+        Pathfinder 1e system. Pathfinder is a trademark of Paizo Inc.; this is not an official Paizo product.
+      </div>
+      <button class="sm" onClick={() => setOpen(!open)}>{open ? 'Hide' : 'Show'} the license and sources</button>
+      {open && (
+        <>
+          {ix && <div class="note2" style="margin-top:8px">Open Game Content from {Object.keys(ix.books).length} Paizo books, including {Object.values(ix.books).filter((b) => b.t === 'core').map((b) => b.n).join(', ')}. Imported from {ix.upstream} at {ix.commit.slice(0, 10)}.</div>}
+          <div class="ogl">{ogl || 'Loading…'}</div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export function Notes() {
   const ch = useCh();
   const m = mods(ch), L = ch.lvl;
@@ -144,6 +171,7 @@ export function Notes() {
         </div>
         <div class="card"><h3>Session notes</h3><textarea placeholder="Leads. Loot. What Brug ate." value={ch.notes} onInput={(e) => update((d) => void (d.notes = (e.target as HTMLTextAreaElement).value), undefined, 'notes')} /></div>
       </div>
+      <GameContentLicense />
       <div class="card"><h3>Backstory</h3><textarea style="min-height:280px" value={ch.bio} onInput={(e) => update((d) => void (d.bio = (e.target as HTMLTextAreaElement).value), undefined, 'bio')} /></div>
     </>
   );

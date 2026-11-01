@@ -1,0 +1,1217 @@
+{
+ "system": "pf1",
+ "edition": "Pathfinder 1st Edition",
+ "upstream": "https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1",
+ "commit": "9dcdc0f98720c92c5809da537cbb338df562ecb1",
+ "files": {
+  "spells": 3028,
+  "feats": 390,
+  "classes": 49,
+  "races": 80,
+  "abilities": 4679,
+  "buffs": 185,
+  "items": 2803
+ },
+ "books": {
+  "PZO1110": {
+   "n": "Core Rulebook",
+   "a": "CRB",
+   "t": "core"
+  },
+  "PZO1112": {
+   "n": "Bestiary [1]",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1133": {
+   "n": "Bestiary 5",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1137": {
+   "n": "Bestiary 6",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1129": {
+   "n": "Advanced Class Guide",
+   "a": "ACG",
+   "t": "core"
+  },
+  "PZO1115": {
+   "n": "Advanced Player's Guide",
+   "a": "APG",
+   "t": "core"
+  },
+  "PZO1121": {
+   "n": "Advanced Race Guide",
+   "a": "ARG",
+   "t": "core"
+  },
+  "PZO1138": {
+   "n": "Adventurer's Guide",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1132": {
+   "n": "Occult Adventures",
+   "a": "OA",
+   "t": "core"
+  },
+  "PZO1131": {
+   "n": "Pathfinder Unchained",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1136": {
+   "n": "Villain Codex",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1130": {
+   "n": "Monster Codex",
+   "a": "MC",
+   "t": "core"
+  },
+  "PZO1135": {
+   "n": "Horror Adventures",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1126": {
+   "n": "Mythic Adventures",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1118": {
+   "n": "Ultimate Combat",
+   "a": "UC",
+   "t": "core"
+  },
+  "PZO1123": {
+   "n": "Ultimate Equipment",
+   "a": "UE",
+   "t": "core"
+  },
+  "PZO1134": {
+   "n": "Ultimate Intrigue",
+   "a": "UI",
+   "t": "core"
+  },
+  "PZO1117": {
+   "n": "Ultimate Magic",
+   "a": "UM",
+   "t": "core"
+  },
+  "PZO1139": {
+   "n": "Book of the Damned",
+   "a": null,
+   "t": "core"
+  },
+  "PZO1140": {
+   "n": "Ultimate Wilderness",
+   "a": "UW",
+   "t": "core"
+  },
+  "PZO1141": {
+   "n": "Planar Adventures",
+   "a": "PA",
+   "t": "core"
+  },
+  "PZO9002": {
+   "n": "Rise of the Runelords #2: The Skinsaw Murders",
+   "a": "RotR-2",
+   "t": "ap"
+  },
+  "PZO9005": {
+   "n": "Rise of the Runelords #5: Sins of the Saviors",
+   "a": "RotR-5",
+   "t": "ap"
+  },
+  "PZO1021": {
+   "n": "Curse of the Crimson Throne",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9008": {
+   "n": "Curse of the Crimson Throne #2: Seven Days to the Grave",
+   "a": "CotCT-2",
+   "t": "ap"
+  },
+  "PZO9009": {
+   "n": "Curse of the Crimson Throne #3: Escape From Old Korvosa",
+   "a": "CotCT-3",
+   "t": "ap"
+  },
+  "PZO9401": {
+   "n": "Second Darkness Player's Guide",
+   "a": null,
+   "t": "pg"
+  },
+  "PZO9014": {
+   "n": "Second Darkness #2: Children of the Void",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9015": {
+   "n": "Second Darkness #3: The Armageddon Echo",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9016": {
+   "n": "Second Darkness #4: Endless Night",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9017": {
+   "n": "Second Darkness #5: A Memory of Darkness",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9404": {
+   "n": "Legacy of Fire Player's Guide",
+   "a": null,
+   "t": "pg"
+  },
+  "PZO9019": {
+   "n": "Legacy of Fire #1: Howl of the Carrion King",
+   "a": "LoF-1",
+   "t": "ap"
+  },
+  "PZO9023": {
+   "n": "Legacy of Fire #5: The Impossible Eye",
+   "a": "LoF-5",
+   "t": "ap"
+  },
+  "PZO9024": {
+   "n": "Legacy of Fire #6: The Final Wish",
+   "a": "LoF-6",
+   "t": "ap"
+  },
+  "PZO9026": {
+   "n": "Council of Thieves #2: The Sixfold Trial",
+   "a": "CoT-2",
+   "t": "ap"
+  },
+  "PZO9029": {
+   "n": "Council of Thieves #5: Mother of Flies",
+   "a": "CoT-5",
+   "t": "ap"
+  },
+  "PZO9030": {
+   "n": "Council of Thieves #6: The Twice-Damned Prince",
+   "a": "CoT-6",
+   "t": "ap"
+  },
+  "PZO9032": {
+   "n": "Kingmaker #2: Rivers Run Red",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9035": {
+   "n": "Kingmaker #5: War of the River Kings",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9038": {
+   "n": "Serpent's Skull #2: Racing to Ruin",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9039": {
+   "n": "Serpent's Skull #3: City of Seven Spears",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9041": {
+   "n": "Serpent's Skull #5: The Thousand Fangs Below",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9042": {
+   "n": "Serpent's Skull #6: Sanctum of the Serpent God",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9043": {
+   "n": "Carrion Crown #1: The Haunting of Harrowstone",
+   "a": "CC-1",
+   "t": "ap"
+  },
+  "PZO9044": {
+   "n": "Carrion Crown #2: Trial of the Beast",
+   "a": "CC-2",
+   "t": "ap"
+  },
+  "PZO9049": {
+   "n": "Jade Regent #1: The Brinewall Legacy",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9050": {
+   "n": "Jade Regent #2: Night of Frozen Shadows",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9051": {
+   "n": "Jade Regent #3: The Hungry Storm",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9052": {
+   "n": "Jade Regent #4: Forest of Spirits",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9053": {
+   "n": "Jade Regent #5: Tide of Honor",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9054": {
+   "n": "Jade Regent #6: The Empty Throne",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9055": {
+   "n": "Skull & Shackles #1: The Wormwood Mutiny",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9056": {
+   "n": "Skull & Shackles #2: Raiders of the Fever Sea",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9059": {
+   "n": "Skull & Shackles #5: The Price of Infamy",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO1002": {
+   "n": "Rise of the Runelords Anniversary Edition",
+   "a": "RotRAE",
+   "t": "ap"
+  },
+  "PZO9061": {
+   "n": "Shattered Star #1: Shards of Sin",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9062": {
+   "n": "Shattered Star #2: Curse of the Lady's Light",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9064": {
+   "n": "Shattered Star #4: Beyond the Doomsday Door",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9065": {
+   "n": "Shattered Star #5: Into the Nightmare Rift",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9067": {
+   "n": "Reign of Winter #1: The Snows of Summer",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9068": {
+   "n": "Reign of Winter #2: The Shackled Hut",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9069": {
+   "n": "Reign of Winter #3: Maiden, Mother, Crone",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9071": {
+   "n": "Reign of Winter #5: Rasputin Must Die!",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9074": {
+   "n": "Wrath of the Righteous #2: Sword of Valor",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9077": {
+   "n": "Wrath of the Righteous #5: Herald of the Ivory Labyrinth",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9078": {
+   "n": "Wrath of the Righteous #6: City of Locusts",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9080": {
+   "n": "Mummy's Mask #2: Empty Graves",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9081": {
+   "n": "Mummy's Mask #3: Shifting Sands",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9082": {
+   "n": "Mummy's Mask #4: Secrets of the Sphinx",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9084": {
+   "n": "Mummy's Mask #6: Pyramid of the Sky Pharaoh",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9085": {
+   "n": "Iron Gods #1: Fires of Creation",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9086": {
+   "n": "Iron Gods #2: Lords of Rust",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9087": {
+   "n": "Iron Gods #3: The Choking Tower",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9088": {
+   "n": "Iron Gods #4: Valley of the Brain Collectors",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9089": {
+   "n": "Iron Gods #5: Palace of Fallen Stars",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9090": {
+   "n": "Iron Gods #6: The Divinity Drive",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9091": {
+   "n": "Giantslayer #1: Battle of Bloodmarch Hill",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9093": {
+   "n": "Giantslayer #3: Forge of the Giant God",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9095": {
+   "n": "Giantslayer #5: Anvil of Fire",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9099": {
+   "n": "Hell's Rebels #3: Dance of the Damned",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90100": {
+   "n": "Hell's Rebels #4: A Song of Silver",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90102": {
+   "n": "Hell's Rebels #6: Breaking the Bones of Hell",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90107": {
+   "n": "Hell's Vengeance #5: Scourge of the Godclaw",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90110": {
+   "n": "Strange Aeons #2: The Thrushmoor Terror",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90111": {
+   "n": "Strange Aeons #3: Dreams of the Yellow King",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90113": {
+   "n": "Strange Aeons #5: What Grows Within",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90115": {
+   "n": "Ironfang Invasion #1: Trail of the Hunted",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90116": {
+   "n": "Ironfang Invasion #2: Fangs of War",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90117": {
+   "n": "Ironfang Invasion #3: Assault on Longshadow",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90119": {
+   "n": "Ironfang Invasion #5: Prisoners of the Blight",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90131": {
+   "n": "War for the Crown #5: The Reaper's Right Hand",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90134": {
+   "n": "Return of the Runelords #2: It Came from Hollow Mountain",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90135": {
+   "n": "Return of the Runelords #3: Runeplague",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90139": {
+   "n": "Tyrant's Grasp #1: The Dead Roads",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90140": {
+   "n": "Tyrant's Grasp #2: Eulogy for Roslar's Coffer",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO90143": {
+   "n": "Tyrant's Grasp #5: Borne by the Sun's Grace",
+   "a": null,
+   "t": "ap"
+  },
+  "PZO9502": {
+   "n": "Conquest of Bloodsworn Vale",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9504": {
+   "n": "Gallery of Evil",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9507": {
+   "n": "Guardians of Dragonfall",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9542": {
+   "n": "The Dragon's Demand",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9547": {
+   "n": "Daughters of Fury",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9549": {
+   "n": "The House on Hook Street",
+   "a": null,
+   "t": "module"
+  },
+  "PZO9403": {
+   "n": "Osirion, Land of Pharaohs",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9405": {
+   "n": "Taldor, Echoes of Glory",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9406": {
+   "n": "Qadira, Gateway to the East",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9407": {
+   "n": "Cheliax, Empire of Devils",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9408": {
+   "n": "Dwarves of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9409": {
+   "n": "Andoran, Spirit of Liberty",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9410": {
+   "n": "Adventurer's Armory",
+   "a": "AA",
+   "t": "companion"
+  },
+  "PZO9411": {
+   "n": "Gnomes of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9412": {
+   "n": "Sargava, the Lost Colony",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9413": {
+   "n": "Orcs of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9414": {
+   "n": "Inner Sea Primer",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9415": {
+   "n": "Halflings of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9416": {
+   "n": "Faiths of Purity",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9417": {
+   "n": "Humans of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9418": {
+   "n": "Faiths of Balance",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9419": {
+   "n": "Goblins of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9420": {
+   "n": "Faiths of Corruption",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9421": {
+   "n": "Dragon Empires Primer",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9422": {
+   "n": "Pirates of the Inner Sea",
+   "a": "PotIS",
+   "t": "companion"
+  },
+  "PZO9425": {
+   "n": "Varisia, Birthplace of Legends",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9426": {
+   "n": "Knights of the Inner Sea",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9427": {
+   "n": "Blood of the Night",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9428": {
+   "n": "People of the North",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9429": {
+   "n": "Animal Archive",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9430": {
+   "n": "Dungeoneer's Handbook",
+   "a": "DHB",
+   "t": "companion"
+  },
+  "PZO9431": {
+   "n": "Champions of Purity",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9432": {
+   "n": "Kobolds of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9433": {
+   "n": "Quests & Campaigns",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9434": {
+   "n": "Dragonslayer's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9435": {
+   "n": "Pathfinder Society Primer",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9436": {
+   "n": "Faiths & Philosophies",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9437": {
+   "n": "Demon Hunter's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9438": {
+   "n": "Mythic Origins",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9439": {
+   "n": "Blood of the Moon",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9440": {
+   "n": "Magical Marketplace",
+   "a": "MM",
+   "t": "companion"
+  },
+  "PZO9441": {
+   "n": "People of the Sands",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9443": {
+   "n": "Champions of Balance",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9444": {
+   "n": "Undead Slayer's Handbook",
+   "a": "USH",
+   "t": "companion"
+  },
+  "PZO9445": {
+   "n": "Alchemy Manual",
+   "a": "AM",
+   "t": "companion"
+  },
+  "PZO9446": {
+   "n": "The Harrow Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9447": {
+   "n": "Blood of the Elements",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9448": {
+   "n": "People of the River",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9449": {
+   "n": "People of the Stars",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9450": {
+   "n": "Champions of Corruption",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9451": {
+   "n": "Advanced Class Origins",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9452": {
+   "n": "Ranged Tactics Toolbox",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9453": {
+   "n": "Giant Hunter's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9454": {
+   "n": "Familiar Folio",
+   "a": "FF",
+   "t": "companion"
+  },
+  "PZO9455": {
+   "n": "Melee Tactics Toolbox",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9456": {
+   "n": "Heroes of the Wild",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9457": {
+   "n": "Cohorts and Companions",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9458": {
+   "n": "Monster Summoner's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9459": {
+   "n": "Dirty Tactics Toolbox",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9460": {
+   "n": "Heroes of the Streets",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9461": {
+   "n": "Occult Origins",
+   "a": "OO",
+   "t": "companion"
+  },
+  "PZO9462": {
+   "n": "Black Markets",
+   "a": "BM",
+   "t": "companion"
+  },
+  "PZO9464": {
+   "n": "Agents of Evil",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9465": {
+   "n": "Arcane Anthology",
+   "a": "AA",
+   "t": "companion"
+  },
+  "PZO9466": {
+   "n": "Blood of Shadows",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9467": {
+   "n": "Armor Master's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9468": {
+   "n": "Magic Tactics Toolbox",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9469": {
+   "n": "Spymaster's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9470": {
+   "n": "Legacy of Dragons",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9471": {
+   "n": "Haunted Heroes Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9472": {
+   "n": "Divine Anthology",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9473": {
+   "n": "Blood of the Beast",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9474": {
+   "n": "Paths of the Righteous",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9475": {
+   "n": "Healer's Handbook",
+   "a": "HH",
+   "t": "companion"
+  },
+  "PZO9476": {
+   "n": "Heroes of the High Court",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9477": {
+   "n": "Psychic Anthology",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9478": {
+   "n": "Monster Hunter's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9479": {
+   "n": "Heroes of the Darklands",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9480": {
+   "n": "Legacy of the First World",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9481": {
+   "n": "Adventurer's Armory 2",
+   "a": "AA2",
+   "t": "companion"
+  },
+  "PZO9482": {
+   "n": "Blood of the Sea",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9483": {
+   "n": "Elemental Master's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9484": {
+   "n": "Antihero's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9485": {
+   "n": "Blood of the Coven",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9486": {
+   "n": "People of the Wastes",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9487": {
+   "n": "Potions & Poisons",
+   "a": "P&P",
+   "t": "companion"
+  },
+  "PZO9488": {
+   "n": "Disciple's Doctrine",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9489": {
+   "n": "Merchant's Manifest",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9490": {
+   "n": "Blood of the Ancients",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9491": {
+   "n": "Heroes from the Fringe",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9492": {
+   "n": "Plane-Hopper's Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9493": {
+   "n": "Martial Arts Handbook",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9494": {
+   "n": "Wilderness Origins",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9495": {
+   "n": "Heroes of Golarion",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO9496": {
+   "n": "Chronicle of Legends",
+   "a": null,
+   "t": "companion"
+  },
+  "PZO1107": {
+   "n": "Pathfinder Chronicles: Classic Monsters Revisited",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO1111": {
+   "n": "Pathfinder Chronicles: Campaign Setting",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9202": {
+   "n": "Pathfinder Chronicles: Gods and Magic",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9208": {
+   "n": "Pathfinder Chronicles: Dark Markets: A Guide to Katapesh",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9210": {
+   "n": "Pathfinder Chronicles: Dungeon Denizens Revisited",
+   "a": "DDR",
+   "t": "setting"
+  },
+  "PZO9211": {
+   "n": "Pathfinder Chronicles: Seekers of Secrets",
+   "a": "SoS",
+   "t": "setting"
+  },
+  "PZO9214": {
+   "n": "Pathfinder Chronicles: Cities of Golarion",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9216": {
+   "n": "Pathfinder Chronicles: Classic Horrors Revisited",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9217E": {
+   "n": "Pathfinder Chronicles: Guide to the River Kingdoms",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9220": {
+   "n": "Pathfinder Chronicles: Classic Treasures Revisited",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9221": {
+   "n": "Pathfinder Chronicles: Faction Guide",
+   "a": "FG",
+   "t": "setting"
+  },
+  "PZO9225": {
+   "n": "Lords of Chaos",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9226": {
+   "n": "The Inner Sea World Guide",
+   "a": "ISWG",
+   "t": "setting"
+  },
+  "PZO9232": {
+   "n": "Rival Guide",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9234": {
+   "n": "Dungeons of Golarion",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9235": {
+   "n": "Pathfinder Society Field Guide",
+   "a": "PSFG",
+   "t": "setting"
+  },
+  "PZO9237": {
+   "n": "Inner Sea Magic",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9238": {
+   "n": "Lands of the Linnorm Kings",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9239": {
+   "n": "Horsemen of the Apocalypse",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9241": {
+   "n": "Mythical Monsters Revisited",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9243": {
+   "n": "Distant Worlds",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9244": {
+   "n": "Isles of the Shackles",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9246": {
+   "n": "Lost Kingdoms",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9255": {
+   "n": "Chronicle of the Righteous",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9257": {
+   "n": "Castles of the Inner Sea",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9261": {
+   "n": "Demons Revisited",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9265": {
+   "n": "Osirion, Legacy of Pharaohs",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9267": {
+   "n": "Inner Sea Gods",
+   "a": "ISG",
+   "t": "setting"
+  },
+  "PZO9268": {
+   "n": "Inner Sea Combat",
+   "a": "ISC",
+   "t": "setting"
+  },
+  "PZO9269": {
+   "n": "Occult Mysteries",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9272": {
+   "n": "Technology Guide",
+   "a": "TG",
+   "t": "setting"
+  },
+  "PZO9276": {
+   "n": "Belkzen, Hold of the Orc Hordes",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9283": {
+   "n": "Inner Sea Monster Codex",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9284": {
+   "n": "Occult Bestiary",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9280": {
+   "n": "Inner Sea Races",
+   "a": "ISR",
+   "t": "setting"
+  },
+  "PZO9285": {
+   "n": "Distant Shores",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9286": {
+   "n": "Occult Realms",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9290": {
+   "n": "Inner Sea Faiths",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9292": {
+   "n": "Inner Sea Intrigue",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9293": {
+   "n": "Path of the Hellknight",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9295": {
+   "n": "Planes of Power",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9296": {
+   "n": "Inner Sea Temples",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9297": {
+   "n": "Horror Realms",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9298": {
+   "n": "The First World, Realm of the Fey",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO9299": {
+   "n": "Qadira, Jewel of the East",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO92102": {
+   "n": "Aquatic Adventures",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO92109": {
+   "n": "Distant Realms",
+   "a": null,
+   "t": "setting"
+  },
+  "PZO92112": {
+   "n": "Faiths of Golarion",
+   "a": null,
+   "t": "setting"
+  }
+ }
+}
