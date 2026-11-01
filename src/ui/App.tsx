@@ -20,6 +20,8 @@ import { sbView, Spellbook } from './tabs/Spellbook';
 import { Today } from './tabs/Today';
 import { backup, reloadFromStorage, undoLast, update, useStore } from './store';
 import { esc } from '../rules/core';
+import { ago, lastFileSave, saveToFile } from './fileio';
+import { LoadFileButton } from './components/LoadFileButton';
 
 const TABS = [
   ['t', 'Today', Today], ['sb', 'Spellbook', Spellbook], ['c', 'Combat', Combat], ['y', 'Mythic', Mythic],
@@ -37,6 +39,8 @@ export function App() {
   });
   const [amt, setAmt] = useState(1);
   const [receipt, setReceipt] = useState<{ title: string; lines: ComponentChildren[] } | null>(null);
+  const [fileSaved, setFileSaved] = useState<number | null>(null);
+  useEffect(() => { if (st.ch) setFileSaved(lastFileSave(st.ch.id)); }, [st.ch?.id]);
   const [leveling, setLeveling] = useState(false);
   const [printing, setPrinting] = useState(false);
 
@@ -187,8 +191,15 @@ export function App() {
             <button class="go" disabled={L >= 20} onClick={() => setLeveling(true)}>▲ Level Up</button>
             <button title="Switch between parchment and dark" onClick={() => update((d) => void (d.theme = d.theme === 'dark' ? 'parchment' : 'dark'))}>◐ {ch.theme === 'dark' ? 'Parchment' : 'Dark'}</button>
             <button title="Print or save a clean copy" onClick={() => setPrinting(true)}>🖨 Print</button>
+            <button title="Download your character as a file: a backup you keep, or to move to another device" onClick={() => { saveToFile(ch); setFileSaved(lastFileSave(ch.id)); }}>⤓ Save file</button>
+            <LoadFileButton title="Load a character file you saved (the current one is backed up first)"
+              onDone={(m) => setReceipt({ title: m.startsWith('Could not') ? 'Not loaded' : 'Character loaded', lines: [m] })}>⤒ Load file</LoadFileButton>
           </div>
-          <span class="sv">{st.dirty ? '● saving… ' : '✓ saved on this device · '}{st.status}</span>
+          <span class="sv">
+            {st.dirty ? '● saving… ' : '✓ saved on this device · '}
+            {fileSaved ? `file saved ${ago(fileSaved)}` : <span style="color:var(--rust)">not saved to a file yet</span>}
+            {st.status ? ' · ' + st.status : ''}
+          </span>
         </div>
       </div>
 

@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'preact/hooks';
 import { loadIndex, loadOGL } from '../../compendium/load';
 import type { CompendiumIndex } from '../../compendium/types';
-import { fromImport, fromLegacyHtml, listBackups, toExport, type Backup } from '../../model/storage';
+import { listBackups, type Backup } from '../../model/storage';
+import { saveToFile } from '../fileio';
+import { LoadFileButton } from '../components/LoadFileButton';
 import { mods } from '../../rules/derive';
 import { mythicPower } from '../../rules/mythic-math';
 import { restHeal, restHealRAW, schoolPowerUses } from '../../rules/powers';
@@ -55,38 +57,13 @@ function Backups() {
   const [msg, setMsg] = useState('');
   useEffect(() => void listBackups(ch.id).then(setList), [ch.id, ch.savedAt]);
 
-  const download = () => {
-    const blob = new Blob([JSON.stringify(toExport(ch), null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    const stamp = new Date().toISOString().slice(0, 10);
-    a.download = `${(ch.identity.name || ch.id).replace(/\W+/g, '_')}_${stamp}.json`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  };
-  const importFile = async (f: File) => {
-    try {
-      const text = await f.text();
-      const raw = /\.html?$/i.test(f.name) ? fromLegacyHtml(text) : fromImport(text);
-      if (!confirm(`Replace the character on this sheet with the one in ${f.name}? The current one is backed up first.`)) return;
-      await replaceCharacter(raw, `import of ${f.name}`);
-      setMsg(`Imported ${f.name}. The previous version is in the backups below.`);
-      setList(await listBackups(ch.id));
-    } catch (e) {
-      setMsg('Could not import: ' + (e as Error).message);
-    }
-  };
   return (
     <>
       <div class="addrow">
-        <button class="go" onClick={download}>Export character (.json)</button>
-        <label class="btnlike">
-          Import a file…
-          <input type="file" accept=".json,.html,application/json,text/html" style="display:none"
-            onChange={(e) => { const f = (e.target as HTMLInputElement).files?.[0]; if (f) void importFile(f); (e.target as HTMLInputElement).value = ''; }} />
-        </label>
+        <button class="go" onClick={() => setMsg(`Saved ${saveToFile(ch)} to your downloads.`)}>⤓ Save to a file</button>
+        <LoadFileButton onDone={(m) => { setMsg(m); void listBackups(ch.id).then(setList); }}>⤒ Load a file…</LoadFileButton>
       </div>
-      <div class="note2" style="margin-top:5px">Export saves your character as a file you can keep or move to another device. Import accepts an export, or an old Kaldaran_Sheet.html.</div>
+      <div class="note2" style="margin-top:5px">The sheet keeps your character in this browser by itself. Saving to a file gives you a copy you own: a backup, or a way to move to another device. Load takes a saved file, or an old Kaldaran_Sheet.html.</div>
       {msg && <div class="flag">{msg}</div>}
       <div class="tiny" style="text-transform:uppercase;margin:12px 0 7px">Backups — automatic rollback points, newest first</div>
       {!list.length && <div class="empty2">None yet. One is taken before every rest, level-up and import.</div>}

@@ -158,6 +158,22 @@ const assert = (c, m) => { if (!c) { console.log('FAIL: ' + m); process.exitCode
   await tab('Character');
   assert((await page.$eval('.pane.on', (p) => p.innerText)).includes('Power Attack'), 'Lookup: Power Attack added to feats');
 
+  // 12. Save to a file, then load it back.
+  page.on('dialog', (d) => d.accept());
+  await tab('Inventory');
+  assert(/not saved to a file yet/.test(await page.textContent('.foot .sv')), 'footer says the character has not been saved to a file');
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('.foot button:has-text("Save file")')]);
+  const saved = await dl.path();
+  assert(/\.json$/.test(dl.suggestedFilename()), `Save file downloads ${dl.suggestedFilename()}`);
+  assert(/file saved today/.test(await page.textContent('.foot .sv')), 'footer then says "file saved today"');
+  const gpBefore = await page.$eval(".money input >> nth=0", (e) => e.value);
+  await page.fill('.money input >> nth=0', '1');
+  await page.press('.money input >> nth=0', 'Tab');
+  await page.setInputFiles('.foot input[type=file]', saved);
+  await page.waitForFunction(() => /Loaded /.test(document.body.innerText), null, { timeout: 10000 });
+  await page.click('.rcpt button').catch(() => {});
+  assert((await page.$eval('.money input >> nth=0', (e) => e.value)) === gpBefore, `Load file restores the saved character (gp ${gpBefore})`);
+
   assert(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.join('; ') : ''));
   await browser.close();
 })();
